@@ -68,6 +68,7 @@ local light   = "rgba(c7ced6ff)"
 hl.on("hyprland.start", function()
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("waybar")
+    hl.exec_cmd("mako")
     hl.exec_cmd("wal -i {{ .chezmoi.homeDir }}/Img/wallhaven-9oo8k1.jpg")
     hl.exec_cmd(lidScript)
 end)

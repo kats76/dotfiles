@@ -1,0 +1,27 @@
+# Notificaciones con la identidad de Hyprland: salen bajo el título de la ventana de waybar
+font=JetBrainsMono Nerd Font 10
+background-color=#1e1e2ef2
+text-color=#cdd6f4
+border-color=#8a63c7
+progress-color=over #8a63c7
+border-size=2
+border-radius=10
+padding=10,14
+width=420
+height=160
+icons=1
+max-icon-size=32
+max-visible=3
+default-timeout=5000
+
+# Pegadas a la barra, centradas como el título de la ventana
+anchor=top-center
+outer-margin=6,0,0,0
+margin=6
+
+[urgency=low]
+border-color=#a08f95
+
+[urgency=critical]
+border-color=#c44532
+default-timeout=0
