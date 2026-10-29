@@ -12,7 +12,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 
 - [Instalación](#instalación-arch-linux)
 - [Paleta y fuentes](#paleta-y-fuentes)
-- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Bloqueo](#bloqueo-e-inactividad) · [Lanzador](#lanzador-de-apps-wofi) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [Gestor de archivos y GTK](#gestor-de-archivos-y-gtk)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Bloqueo](#bloqueo-e-inactividad) · [Lanzador](#lanzador-de-apps-wofi) · [Visor](#visor-de-imágenes-swayimg) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [Gestor de archivos y GTK](#gestor-de-archivos-y-gtk)
 - [Flujo de trabajo](#flujo-de-trabajo) · [Nunca va al repo](#nunca-va-al-repo-) · [Otras máquinas](#otras-máquinas)
 
 ## Qué hay aquí
@@ -23,7 +23,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 | `dot_config/waybar/` | `~/.config/waybar/` | Barra superior |
 | `dot_config/sddm-silent/` | `~/.config/sddm-silent/` | Pantalla de login (tema SilentSDDM) y su instalador |
 | `dot_config/wlogout/`, `wofi/`, `mako/` | `~/.config/…` | Menú de salida, lanzador de apps y notificaciones |
-| `dot_config/kitty/`, `cava/` | `~/.config/…` | Terminal y visualizador de audio |
+| `dot_config/kitty/`, `cava/`, `swayimg/` | `~/.config/…` | Terminal, visualizador de audio y visor de imágenes |
 | `dot_config/nvim/` | `~/.config/nvim/` | Neovim con lazy.nvim y Catppuccin |
 | `dot_config/fontconfig`, `gtk-3.0`, `gtk-4.0`, `qt6ct` | `~/.config/…` | Para que las apps GTK y Qt sigan el mismo estilo |
 | `dot_local/share/color-schemes/` | `~/.local/share/color-schemes/` | Esquema de color de Qt con la paleta |
@@ -36,7 +36,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el sistema a medio actualizar rompe SDDM.
 
 ```bash
-sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle kitty wofi cava brightnessctl playerctl \
+sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
 yay -S wlogout sddm-silent-theme python-pywal
@@ -175,6 +175,16 @@ Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. 
 ![Lanzador de apps](docs/img/wofi.webp)
 
 `Super + Space`. `wofi/config` fija el tamaño (560×420), la posición (centro) y la terminal para las apps de terminal; `wofi/style.css` usa la paleta, con la entrada seleccionada en `accent`.
+
+## Visor de imágenes (swayimg)
+
+![Galería de swayimg](docs/img/swayimg.webp)
+
+[swayimg](https://github.com/artemsen/swayimg) abre todos los tipos de imagen. `swayimg/init.lua` solo cambia el aspecto: fondo `bg`, texto `fg` en JetBrainsMono y borde `accent` en la miniatura seleccionada. Con `Enter` se pasa de una imagen a la galería y al revés. Para que sea el visor por defecto, ejecútalo una vez en un equipo nuevo:
+
+```bash
+xdg-mime default swayimg.desktop $(grep '^MimeType=' /usr/share/applications/swayimg.desktop | cut -d= -f2 | tr ';' ' ')
+```
 
 ## Terminal y shell
 
