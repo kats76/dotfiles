@@ -36,7 +36,7 @@ Mi configuración personal, gestionada con [chezmoi](https://www.chezmoi.io/): u
 | gray | `#a08f95` | Elementos inactivos |
 | light | `#c7ced6` | Texto secundario |
 
-Fuente: **JetBrainsMono Nerd Font**, con Noto Color Emoji de respaldo.
+Fuente: **JetBrainsMono Nerd Font**, con Noto Color Emoji y Source Han Sans JP (japonés) de respaldo. Sin una fuente japonesa, el texto en japonés sale en cuadros vacíos en la terminal, el navegador y el título de la ventana en waybar.
 
 ## Instalar el escritorio (Arch Linux)
 
@@ -44,7 +44,7 @@ Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el siste
 
 ```bash
 sudo pacman -S chezmoi hyprland hyprpaper waybar kitty wofi cava brightnessctl playerctl \
-  ttf-jetbrains-mono-nerd noto-fonts-emoji qt6ct thunar starship \
+  ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
 yay -S wlogout sddm-silent-theme python-pywal
 chezmoi init --apply kats76
