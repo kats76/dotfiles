@@ -97,7 +97,7 @@ chezmoi apply
 
 - **Monitores.** Mis tres monitores se definen por su descripción (`desc:…`). Lista los tuyos con `hyprctl monitors all` y edita los bloques `hl.monitor({ … })`: `output`, `mode`, `position` y `scale`. El último bloque (`output = ""`) recoge cualquier otro monitor, así que con una sola pantalla funciona sin tocar nada.
 - **Pantalla del portátil.** `scripts/lid.sh` repite el modo, la posición y la escala de `eDP-1`: mantenlo igual que su bloque `hl.monitor`.
-- **Apps.** `local terminal`, `fileManager` y `menu` al principio del fichero.
+- **Apps.** `local terminal` y `fileManager` al principio del fichero.
 - **Teclado.** `kb_layout = "us"` en el bloque `input` (por ejemplo `"es"`).
 - **Comprobar antes de recargar:** `Hyprland --verify-config -c ~/.config/hypr/hyprland.lua` y después `hyprctl reload`. El CI hace la misma comprobación en cada pull request. Los stubs de la API están en `/usr/share/hypr/stubs/hl.meta.lua`.
 
@@ -194,7 +194,7 @@ xdg-mime default swayimg.desktop $(grep '^MimeType=' /usr/share/applications/swa
 - **zsh** (`.zshrc`): Oh My Zsh con el plugin `git`, el prompt [starship](https://starship.rs) y zsh-autosuggestions. Añade `~/.local/bin` y `~/.npm-global/bin` al `PATH`.
 - **mako** (`mako/config`): notificaciones centradas justo bajo el título de la ventana en waybar, con la paleta, JetBrainsMono y las mismas esquinas de 10 px que los módulos de la barra. Las normales llevan borde `accent` y se cierran a los 5 s; las de baja prioridad, `gray`; las críticas, `red`, y se quedan hasta hacer clic. Para recargar: `makoctl reload`.
 - **fastfetch** usa su config por defecto; no hay fichero suyo en el repo.
-- **cava** (`cava/config`) usa sus valores por defecto más algunos shaders y temas. Si no muestra barras mientras suena música, pon `method = pipewire` en su sección `[input]`.
+- **cava** (`cava/config`) usa sus valores por defecto más algunos shaders y temas. Lee el audio de PipeWire (`method = pipewire` en `[input]`).
 
 ## Neovim
 
@@ -221,7 +221,7 @@ Para añadir un plugin, crea un fichero en `lua/plugins/` que devuelva su especi
   gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono Nerd Font 10'
   ```
 
-- **Qt** (`qt6ct/qt6ct.conf`): estilo Fusion con el esquema de color `HyprPalette` de `~/.local/share/color-schemes/`. Todavía no se aplica: `hyprland.lua` fija `QT_QPA_PLATFORMTHEME=kde`, que necesita paquetes de KDE que no están instalados (pendiente en [#3](../../issues/3)).
+- **Qt** (`qt6ct/qt6ct.conf`): estilo Fusion con el esquema de color `HyprPalette` de `~/.local/share/color-schemes/`. `hyprland.lua` fija `QT_QPA_PLATFORMTHEME=qt6ct` para que las apps Qt (como OBS) lo usen.
 
 ## Flujo de trabajo
 
