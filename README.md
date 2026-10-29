@@ -22,7 +22,7 @@ This README is also a guide: each component has a screenshot, what is configured
 | `dot_config/hypr/` | `~/.config/hypr/` | Hyprland 0.57+ in Lua, wallpaper and the lid script |
 | `dot_config/waybar/` | `~/.config/waybar/` | Top bar |
 | `dot_config/sddm-silent/` | `~/.config/sddm-silent/` | Login screen (SilentSDDM theme) and its installer |
-| `dot_config/wlogout/`, `wofi/` | `~/.config/…` | Logout menu and app launcher |
+| `dot_config/wlogout/`, `wofi/`, `mako/` | `~/.config/…` | Logout menu, app launcher and notifications |
 | `dot_config/kitty/`, `cava/` | `~/.config/…` | Terminal and audio visualizer |
 | `dot_config/nvim/` | `~/.config/nvim/` | Neovim with lazy.nvim and Catppuccin |
 | `dot_config/fontconfig`, `gtk-3.0`, `gtk-4.0`, `qt6ct` | `~/.config/…` | Make GTK and Qt apps follow the same look |
@@ -36,7 +36,7 @@ This README is also a guide: each component has a screenshot, what is configured
 Do a full `sudo pacman -Syu` first: installing a Qt package on a partially upgraded system breaks SDDM.
 
 ```bash
-sudo pacman -S chezmoi hyprland hyprpaper waybar kitty wofi cava brightnessctl playerctl \
+sudo pacman -S chezmoi hyprland hyprpaper waybar mako kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
 yay -S wlogout sddm-silent-theme python-pywal
@@ -176,6 +176,7 @@ Run it again after updating `sddm-silent-theme` or changing the wallpaper. `Xset
 
 - **kitty** (`kitty/kitty.conf`): JetBrainsMono 12, 80% background opacity and the 16 terminal colors mapped to the palette. Change `font_size` and `background_opacity` to taste.
 - **zsh** (`.zshrc`): Oh My Zsh with the `git` plugin, the [starship](https://starship.rs) prompt and zsh-autosuggestions. `~/.local/bin` and `~/.npm-global/bin` are added to `PATH`.
+- **mako** (`mako/config`): notifications centered right under the window title in waybar, with the palette, JetBrainsMono and the same 10 px corners as the bar modules. Normal ones have an `accent` border and close after 5 s, low priority `gray`, critical `red` and they stay until clicked. Reload with `makoctl reload`.
 - **fastfetch** runs with its default config; there is no file for it in this repo.
 - **cava** (`cava/config`) uses its defaults plus a few shaders and themes. If it shows no bars while music plays, set `method = pipewire` in its `[input]` section.
 

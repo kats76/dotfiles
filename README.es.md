@@ -22,7 +22,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 | `dot_config/hypr/` | `~/.config/hypr/` | Hyprland 0.57+ en Lua, wallpaper y el script de la tapa |
 | `dot_config/waybar/` | `~/.config/waybar/` | Barra superior |
 | `dot_config/sddm-silent/` | `~/.config/sddm-silent/` | Pantalla de login (tema SilentSDDM) y su instalador |
-| `dot_config/wlogout/`, `wofi/` | `~/.config/…` | Menú de salida y lanzador de apps |
+| `dot_config/wlogout/`, `wofi/`, `mako/` | `~/.config/…` | Menú de salida, lanzador de apps y notificaciones |
 | `dot_config/kitty/`, `cava/` | `~/.config/…` | Terminal y visualizador de audio |
 | `dot_config/nvim/` | `~/.config/nvim/` | Neovim con lazy.nvim y Catppuccin |
 | `dot_config/fontconfig`, `gtk-3.0`, `gtk-4.0`, `qt6ct` | `~/.config/…` | Para que las apps GTK y Qt sigan el mismo estilo |
@@ -36,7 +36,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el sistema a medio actualizar rompe SDDM.
 
 ```bash
-sudo pacman -S chezmoi hyprland hyprpaper waybar kitty wofi cava brightnessctl playerctl \
+sudo pacman -S chezmoi hyprland hyprpaper waybar mako kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
 yay -S wlogout sddm-silent-theme python-pywal
@@ -176,6 +176,7 @@ Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. 
 
 - **kitty** (`kitty/kitty.conf`): JetBrainsMono 12, fondo al 80 % de opacidad y los 16 colores de la terminal adaptados a la paleta. Ajusta `font_size` y `background_opacity` a tu gusto.
 - **zsh** (`.zshrc`): Oh My Zsh con el plugin `git`, el prompt [starship](https://starship.rs) y zsh-autosuggestions. Añade `~/.local/bin` y `~/.npm-global/bin` al `PATH`.
+- **mako** (`mako/config`): notificaciones centradas justo bajo el título de la ventana en waybar, con la paleta, JetBrainsMono y las mismas esquinas de 10 px que los módulos de la barra. Las normales llevan borde `accent` y se cierran a los 5 s; las de baja prioridad, `gray`; las críticas, `red`, y se quedan hasta hacer clic. Para recargar: `makoctl reload`.
 - **fastfetch** usa su config por defecto; no hay fichero suyo en el repo.
 - **cava** (`cava/config`) usa sus valores por defecto más algunos shaders y temas. Si no muestra barras mientras suena música, pon `method = pipewire` en su sección `[input]`.
 
