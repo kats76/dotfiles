@@ -12,7 +12,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 
 - [Instalación](#instalación-arch-linux)
 - [Paleta y fuentes](#paleta-y-fuentes)
-- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Bloqueo](#bloqueo-e-inactividad) · [Lanzador](#lanzador-de-apps-wofi) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [GTK y Qt](#gtk-y-qt)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Bloqueo](#bloqueo-e-inactividad) · [Lanzador](#lanzador-de-apps-wofi) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [Gestor de archivos y GTK](#gestor-de-archivos-y-gtk)
 - [Flujo de trabajo](#flujo-de-trabajo) · [Nunca va al repo](#nunca-va-al-repo-) · [Otras máquinas](#otras-máquinas)
 
 ## Qué hay aquí
@@ -198,10 +198,20 @@ Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. 
 
 Para añadir un plugin, crea un fichero en `lua/plugins/` que devuelva su especificación.
 
-## GTK y Qt
+## Gestor de archivos y GTK
 
-- **GTK 3/4** (`gtk-3.0/settings.ini`, `gtk-4.0/settings.ini`): Adwaita-dark con iconos breeze-dark y modo oscuro preferido.
-- **Qt** (`qt6ct/qt6ct.conf`): estilo Fusion con el esquema de color `HyprPalette` de `~/.local/share/color-schemes/`.
+![Thunar con la paleta](docs/img/thunar.webp)
+
+- **Thunar** es el gestor de archivos (`Super + E`). Sigue la paleta gracias a `gtk-3.0/gtk.css`, que redefine los colores de Adwaita-dark: fondo `bg`, selección `accent` y hover `accent2`. El mismo fichero colorea todas las apps GTK3 (control de volumen, Bluetooth, diálogos).
+- **GTK 3/4** (`gtk-3.0/settings.ini`, `gtk-4.0/settings.ini`): Adwaita-dark, iconos breeze-dark, JetBrainsMono y modo oscuro preferido.
+- En Wayland, las apps GTK leen los iconos y la fuente de gsettings, no de `settings.ini`. Ejecútalo una vez en un equipo nuevo:
+
+  ```bash
+  gsettings set org.gnome.desktop.interface icon-theme 'breeze-dark'
+  gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono Nerd Font 10'
+  ```
+
+- **Qt** (`qt6ct/qt6ct.conf`): estilo Fusion con el esquema de color `HyprPalette` de `~/.local/share/color-schemes/`. Todavía no se aplica: `hyprland.lua` fija `QT_QPA_PLATFORMTHEME=kde`, que necesita paquetes de KDE que no están instalados (pendiente en [#3](../../issues/3)).
 
 ## Flujo de trabajo
 
