@@ -36,7 +36,7 @@ My personal setup, managed with [chezmoi](https://www.chezmoi.io/): one repo, th
 | gray | `#a08f95` | Inactive elements |
 | light | `#c7ced6` | Secondary text |
 
-Font: **JetBrainsMono Nerd Font**, with Noto Color Emoji as fallback.
+Font: **JetBrainsMono Nerd Font**, with Noto Color Emoji and Source Han Sans JP (Japanese) as fallbacks. Without a Japanese font, Japanese text shows as empty squares in the terminal, the browser and the window title in waybar.
 
 ## Install the desktop (Arch Linux)
 
@@ -44,7 +44,7 @@ Do a full `sudo pacman -Syu` first: installing a Qt package on a partially upgra
 
 ```bash
 sudo pacman -S chezmoi hyprland hyprpaper waybar kitty wofi cava brightnessctl playerctl \
-  ttf-jetbrains-mono-nerd noto-fonts-emoji qt6ct thunar starship \
+  ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
 yay -S wlogout sddm-silent-theme python-pywal
 chezmoi init --apply kats76
