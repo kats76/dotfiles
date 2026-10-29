@@ -1,0 +1,24 @@
+name: Config proposal
+description: Suggest a change to the desktop or an app config
+labels: [enhancement]
+body:
+  - type: textarea
+    id: change
+    attributes:
+      label: What would you change?
+      description: Which config or app, and what it should do or look like.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why?
+      description: What it makes easier or more consistent, and what gets in the way today.
+    validations:
+      required: true
+  - type: checkboxes
+    id: pr
+    attributes:
+      label: Contribution
+      options:
+        - label: I can open a pull request against `dev` with the change and the README updated
