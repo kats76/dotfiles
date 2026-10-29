@@ -12,7 +12,7 @@ This README is also a guide: each component has a screenshot, what is configured
 
 - [Install](#install-arch-linux)
 - [Palette and fonts](#palette-and-fonts)
-- [Hyprland](#hyprland) · [Waybar](#waybar) · [Login screen](#login-screen-sddm) · [Logout menu](#logout-menu-wlogout) · [Lock screen](#lock-screen-and-idle) · [App launcher](#app-launcher-wofi) · [Terminal and shell](#terminal-and-shell) · [Neovim](#neovim) · [File manager and GTK](#file-manager-and-gtk)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Login screen](#login-screen-sddm) · [Logout menu](#logout-menu-wlogout) · [Lock screen](#lock-screen-and-idle) · [App launcher](#app-launcher-wofi) · [Image viewer](#image-viewer-swayimg) · [Terminal and shell](#terminal-and-shell) · [Neovim](#neovim) · [File manager and GTK](#file-manager-and-gtk)
 - [Workflow](#workflow) · [Never in the repo](#never-in-the-repo-) · [Other machines](#other-machines)
 
 ## What's inside
@@ -23,7 +23,7 @@ This README is also a guide: each component has a screenshot, what is configured
 | `dot_config/waybar/` | `~/.config/waybar/` | Top bar |
 | `dot_config/sddm-silent/` | `~/.config/sddm-silent/` | Login screen (SilentSDDM theme) and its installer |
 | `dot_config/wlogout/`, `wofi/`, `mako/` | `~/.config/…` | Logout menu, app launcher and notifications |
-| `dot_config/kitty/`, `cava/` | `~/.config/…` | Terminal and audio visualizer |
+| `dot_config/kitty/`, `cava/`, `swayimg/` | `~/.config/…` | Terminal, audio visualizer and image viewer |
 | `dot_config/nvim/` | `~/.config/nvim/` | Neovim with lazy.nvim and Catppuccin |
 | `dot_config/fontconfig`, `gtk-3.0`, `gtk-4.0`, `qt6ct` | `~/.config/…` | Make GTK and Qt apps follow the same look |
 | `dot_local/share/color-schemes/` | `~/.local/share/color-schemes/` | Qt color scheme with the palette |
@@ -36,7 +36,7 @@ This README is also a guide: each component has a screenshot, what is configured
 Do a full `sudo pacman -Syu` first: installing a Qt package on a partially upgraded system breaks SDDM.
 
 ```bash
-sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle kitty wofi cava brightnessctl playerctl \
+sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
 yay -S wlogout sddm-silent-theme python-pywal
@@ -175,6 +175,16 @@ Run it again after updating `sddm-silent-theme` or changing the wallpaper. `Xset
 ![App launcher](docs/img/wofi.webp)
 
 `Super + Space`. `wofi/config` sets the size (560×420), the position (center) and the terminal for terminal apps; `wofi/style.css` uses the palette, with the selected entry in `accent`.
+
+## Image viewer (swayimg)
+
+![swayimg gallery](docs/img/swayimg.webp)
+
+[swayimg](https://github.com/artemsen/swayimg) opens every image type. `swayimg/init.lua` only changes the look: `bg` background, `fg` text in JetBrainsMono and the `accent` border on the selected thumbnail. Press `Enter` to switch between a single image and the gallery. Make it the default viewer once on a new machine:
+
+```bash
+xdg-mime default swayimg.desktop $(grep '^MimeType=' /usr/share/applications/swayimg.desktop | cut -d= -f2 | tr ';' ' ')
+```
 
 ## Terminal and shell
 
