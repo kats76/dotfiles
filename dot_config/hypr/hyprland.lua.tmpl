@@ -77,6 +77,14 @@ hl.on("config.reloaded", function()
     hl.exec_cmd(lidScript)
 end)
 
+-- Conectar o desconectar un monitor con la tapa cerrada (si no, al desenchufar no queda ninguna pantalla)
+hl.on("monitor.added", function()
+    hl.exec_cmd(lidScript)
+end)
+hl.on("monitor.removed", function()
+    hl.exec_cmd(lidScript)
+end)
+
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
