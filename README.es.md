@@ -12,7 +12,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 
 - [Instalación](#instalación-arch-linux)
 - [Paleta y fuentes](#paleta-y-fuentes)
-- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Lanzador](#lanzador-de-apps-wofi) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [GTK y Qt](#gtk-y-qt)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Bloqueo](#bloqueo-e-inactividad) · [Lanzador](#lanzador-de-apps-wofi) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [GTK y Qt](#gtk-y-qt)
 - [Flujo de trabajo](#flujo-de-trabajo) · [Nunca va al repo](#nunca-va-al-repo-) · [Otras máquinas](#otras-máquinas)
 
 ## Qué hay aquí
@@ -36,7 +36,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el sistema a medio actualizar rompe SDDM.
 
 ```bash
-sudo pacman -S chezmoi hyprland hyprpaper waybar mako kitty wofi cava brightnessctl playerctl \
+sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
 yay -S wlogout sddm-silent-theme python-pywal
@@ -163,6 +163,12 @@ Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. 
 `Super + Backspace`. `wlogout/layout` define las seis acciones y su letra (`l` bloquear, `e` cerrar sesión, `u` suspender, `h` hibernar, `s` apagar, `r` reiniciar). Cerrar sesión usa `hyprshutdown` si está instalado y, si no, sale de Hyprland directamente.
 
 `wlogout/style.css` es el estilo por defecto de wlogout con un cambio: solo se resalta el botón que tiene el ratón encima (por defecto también se resaltaba el foco de teclado, así que Lock parecía siempre seleccionado). Los colores se cambian ahí.
+
+## Bloqueo e inactividad
+
+`hypr/hyprlock.conf` tiene la misma estética que la pantalla de login: wallpaper desenfocado y oscurecido, reloj `HH:mm`, la fecha en el idioma del sistema y el campo de contraseña con el degradado de los bordes de las ventanas (`accent` → `accent2`; `red` si la contraseña es incorrecta). Se abre con el botón Lock de wlogout.
+
+`hypr/hypridle.conf` gestiona la inactividad: bloquea a los 5 min, apaga las pantallas a los 10 (vuelven con el ratón o una tecla) y suspende a los 30. Siempre bloquea antes de suspender. Cambia los valores de `timeout` (en segundos) a tu gusto; hypridle arranca con Hyprland.
 
 ## Lanzador de apps (wofi)
 

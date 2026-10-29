@@ -12,7 +12,7 @@ This README is also a guide: each component has a screenshot, what is configured
 
 - [Install](#install-arch-linux)
 - [Palette and fonts](#palette-and-fonts)
-- [Hyprland](#hyprland) · [Waybar](#waybar) · [Login screen](#login-screen-sddm) · [Logout menu](#logout-menu-wlogout) · [App launcher](#app-launcher-wofi) · [Terminal and shell](#terminal-and-shell) · [Neovim](#neovim) · [GTK and Qt](#gtk-and-qt)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Login screen](#login-screen-sddm) · [Logout menu](#logout-menu-wlogout) · [Lock screen](#lock-screen-and-idle) · [App launcher](#app-launcher-wofi) · [Terminal and shell](#terminal-and-shell) · [Neovim](#neovim) · [GTK and Qt](#gtk-and-qt)
 - [Workflow](#workflow) · [Never in the repo](#never-in-the-repo-) · [Other machines](#other-machines)
 
 ## What's inside
@@ -36,7 +36,7 @@ This README is also a guide: each component has a screenshot, what is configured
 Do a full `sudo pacman -Syu` first: installing a Qt package on a partially upgraded system breaks SDDM.
 
 ```bash
-sudo pacman -S chezmoi hyprland hyprpaper waybar mako kitty wofi cava brightnessctl playerctl \
+sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
 yay -S wlogout sddm-silent-theme python-pywal
@@ -163,6 +163,12 @@ Run it again after updating `sddm-silent-theme` or changing the wallpaper. `Xset
 `Super + Backspace`. `wlogout/layout` sets the six actions and their letter (`l` lock, `e` logout, `u` suspend, `h` hibernate, `s` shutdown, `r` reboot). Logout uses `hyprshutdown` if it is installed, and otherwise exits Hyprland directly.
 
 `wlogout/style.css` is the default wlogout style with one change: only the button under the mouse is highlighted (by default the keyboard focus was highlighted too, so Lock always looked selected). Change the colors there.
+
+## Lock screen and idle
+
+`hypr/hyprlock.conf` uses the same look as the login screen: blurred and darkened wallpaper, `HH:mm` clock, the date in the system language and a password field with the window border gradient (`accent` → `accent2`; `red` on a wrong password). The Lock button of wlogout opens it.
+
+`hypr/hypridle.conf` handles inactivity: lock after 5 min, screens off after 10 (they come back with the mouse or a key) and suspend after 30. It always locks before suspending. Change the `timeout` values (in seconds) to taste; hypridle starts with Hyprland.
 
 ## App launcher (wofi)
 
