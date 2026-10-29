@@ -1,0 +1,76 @@
+name: Check configs
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    # Arch, como la máquina real: mismas versiones de Hyprland y chezmoi
+    container: archlinux:latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Install tools
+        run: pacman -Syu --noconfirm --needed git chezmoi shellcheck lua python hyprland
+
+      - uses: actions/checkout@v4
+
+      # Se renderiza en un home vacío: las plantillas y los modify_ se validan tal como se aplican
+      - name: Render dotfiles into an empty home
+        run: |
+          home="$RUNNER_TEMP/home"
+          mkdir -p "$home"
+          chezmoi --source "$GITHUB_WORKSPACE" --destination "$home" \
+            --config "$RUNNER_TEMP/chezmoi.toml" --cache "$RUNNER_TEMP/chezmoi-cache" \
+            --persistent-state "$RUNNER_TEMP/chezmoi-state.boltdb" --no-tty apply --force
+          echo "RENDERED=$home" >> "$GITHUB_ENV"
+          find "$home" -type f | sed "s|^$home/||" | sort
+
+      - name: Lua syntax
+        run: find "$RENDERED" -name '*.lua' -print0 | xargs -0 -r luac -p
+
+      - name: Shell scripts
+        run: |
+          mapfile -t scripts < <(find "$RENDERED" -type f -exec sh -c 'head -n1 "$1" | grep -qE "^#!.*\b(ba|da)?sh\b"' _ {} \; -print)
+          if [[ ${#scripts[@]} -eq 0 ]]; then echo "No shell scripts"; exit 0; fi
+          printf '%s\n' "${scripts[@]}"
+          shellcheck "${scripts[@]}"
+
+      - name: JSON and JSONC
+        run: |
+          python3 - "$RENDERED" <<'EOF'
+          import json, pathlib, re, sys
+          failed = False
+          for path in pathlib.Path(sys.argv[1]).rglob("*.json*"):
+              if path.suffix not in (".json", ".jsonc"):
+                  continue
+              text = path.read_text()
+              if path.suffix == ".jsonc":
+                  # Comentarios de línea completa y comas finales, lo que admite waybar
+                  text = re.sub(r"(?m)^\s*//.*$", "", text)
+                  text = re.sub(r",(\s*[}\]])", r"\1", text)
+              try:
+                  json.loads(text)
+                  print(f"ok  {path}")
+              except json.JSONDecodeError as e:
+                  print(f"ERR {path}: {e}")
+                  failed = True
+          sys.exit(failed)
+          EOF
+
+      # Valida contra la API real de Hyprland (opciones y tipos), no solo la sintaxis.
+      # Hyprland no arranca como root, así que corre con un usuario sin privilegios.
+      - name: Hyprland config
+        run: |
+          config="$RENDERED/.config/hypr/hyprland.lua"
+          if [[ ! -f $config ]]; then echo "No Hyprland config"; exit 0; fi
+          useradd -m ci
+          install -d -m700 -o ci /tmp/ci-runtime
+          install -m644 -o ci "$config" /home/ci/hyprland.lua
+          runuser -u ci -- env HOME=/home/ci XDG_RUNTIME_DIR=/tmp/ci-runtime \
+            Hyprland --verify-config -c /home/ci/hyprland.lua
