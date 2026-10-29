@@ -1,0 +1,70 @@
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 12px;
+}
+
+@define-color bg #1e1e2e;
+@define-color fg #cdd6f4;
+@define-color accent #8a63c7;
+@define-color accent2 #6f9f98;
+@define-color red #c44532;
+@define-color purple #8e6f86;
+@define-color neutral #8c6e6e;
+@define-color gray #a08f95;
+@define-color light #c7ced6;
+
+window#waybar {
+    background-color: alpha(@bg, 0.82);
+    color: @fg;
+}
+
+/* workspace bubbles */
+
+#workspaces button {
+    background: alpha(@bg, 0.95);
+    color: @fg;
+
+    padding: 4px 10px;
+    margin: 6px 4px;
+
+    border-radius: 10px;
+}
+
+#workspaces button.active {
+    background: @accent;
+    color: @light;
+}
+
+#workspaces button.urgent {
+    background: @red;
+    color: @light;
+}
+
+/* modules */
+#clock,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#backlight,
+#tray {
+
+    background: alpha(@bg, 0.95);
+    color: @fg;
+
+    padding: 4px 12px;
+    margin: 6px 4px;
+
+    border-radius: 10px;
+    border: 1px solid alpha(@gray, 0.35);
+}
+
+/* hover animation */
+
+#clock:hover,
+#battery:hover,
+#network:hover,
+#pulseaudio:hover {
+    background: alpha(@accent2, 0.35);
+}

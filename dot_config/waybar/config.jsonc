@@ -1,0 +1,75 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 36,
+
+  "modules-left": [
+    "hyprland/workspaces",
+  ],
+
+  "modules-center": [
+    "hyprland/window"
+  ],
+
+  "modules-right": [
+    "pulseaudio",
+    "backlight",
+    "network",
+    "cpu",
+    "memory",
+    "battery",
+    "clock",
+    "tray"
+  ],
+
+  "hyprland/workspaces": {
+    "disable-scroll": true
+  },
+
+  "clock": {
+    "format": " {:%H:%M}"
+  },
+
+  "network": {
+    "interface": "wlan0",
+    "format-wifi": " {signalStrength}%",
+    "format-disconnected": "󰤭"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-icons": {
+      "default": ["","",""]
+    }
+  },
+
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "󰃠 {percent}%"
+  },
+
+  "battery": {
+    "battery": "BAT0",
+    "adapter": "AC0",
+    "format": "{capacity}% {icon}",
+    "format-icons": ["","","","",""]
+  },
+
+  "cpu": {
+    "format": " {usage}%"
+  },
+
+  "memory": {
+    "format": "󰍛 {}%"
+  },
+
+  "mpris": {
+    "format": "{title} - {artist}",
+    "format-paused": " {title}",
+    "player-icons": {
+        "spotify": "",
+        "default": "🎵"
+    },
+    "max-length": 20
+    }
+}

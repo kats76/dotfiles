@@ -1,0 +1,35 @@
+#!/bin/sh
+# Xsetup de SDDM: deja encendida una sola pantalla para el login.
+# - Tapa cerrada: ignora la pantalla del portátil (si hay otra conectada).
+# - De las que quedan, elige la de mayor resolución (el MSI si está conectado).
+# Se ejecuta como root antes de mostrar el login. Se instala con install.sh.
+
+XRANDR=/usr/bin/xrandr
+
+lid=$(cat /proc/acpi/button/lid/*/state 2>/dev/null | grep -o 'closed\|open' | head -1)
+
+# "SALIDA PIXELES" por cada pantalla conectada (resolución preferida, marcada con +)
+outputs=$($XRANDR --query | awk '
+    / connected/ { out = $1; next }
+    /^[^ ]/      { out = "" }
+    out != "" && $0 ~ /\+/ {
+        split($1, r, "x"); print out, r[1] * r[2]; out = ""
+    }')
+
+[ -z "$outputs" ] && exit 0
+
+candidates=$outputs
+if [ "$lid" = "closed" ]; then
+    externals=$(printf '%s\n' "$outputs" | grep -vE '^(eDP|LVDS)')
+    [ -n "$externals" ] && candidates=$externals
+fi
+
+chosen=$(printf '%s\n' "$candidates" | sort -k2 -n -r | head -1 | cut -d' ' -f1)
+
+args="--output $chosen --auto --primary --rotate normal"
+for out in $(printf '%s\n' "$outputs" | cut -d' ' -f1); do
+    [ "$out" != "$chosen" ] && args="$args --output $out --off"
+done
+
+# shellcheck disable=SC2086
+$XRANDR $args
