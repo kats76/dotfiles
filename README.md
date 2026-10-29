@@ -12,7 +12,7 @@ This README is also a guide: each component has a screenshot, what is configured
 
 - [Install](#install-arch-linux)
 - [Palette and fonts](#palette-and-fonts)
-- [Hyprland](#hyprland) · [Waybar](#waybar) · [Login screen](#login-screen-sddm) · [Logout menu](#logout-menu-wlogout) · [Lock screen](#lock-screen-and-idle) · [App launcher](#app-launcher-wofi) · [Terminal and shell](#terminal-and-shell) · [Neovim](#neovim) · [GTK and Qt](#gtk-and-qt)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Login screen](#login-screen-sddm) · [Logout menu](#logout-menu-wlogout) · [Lock screen](#lock-screen-and-idle) · [App launcher](#app-launcher-wofi) · [Terminal and shell](#terminal-and-shell) · [Neovim](#neovim) · [File manager and GTK](#file-manager-and-gtk)
 - [Workflow](#workflow) · [Never in the repo](#never-in-the-repo-) · [Other machines](#other-machines)
 
 ## What's inside
@@ -198,10 +198,20 @@ Run it again after updating `sddm-silent-theme` or changing the wallpaper. `Xset
 
 Add a plugin by creating a file in `lua/plugins/` that returns its spec.
 
-## GTK and Qt
+## File manager and GTK
 
-- **GTK 3/4** (`gtk-3.0/settings.ini`, `gtk-4.0/settings.ini`): Adwaita-dark with breeze-dark icons and dark mode preferred.
-- **Qt** (`qt6ct/qt6ct.conf`): Fusion style with the `HyprPalette` color scheme from `~/.local/share/color-schemes/`.
+![Thunar with the palette](docs/img/thunar.webp)
+
+- **Thunar** is the file manager (`Super + E`). It follows the palette through `gtk-3.0/gtk.css`, which redefines the Adwaita-dark colors: `bg` background, `accent` selection and `accent2` hover. The same file colors every GTK3 app (volume control, Bluetooth, dialogs).
+- **GTK 3/4** (`gtk-3.0/settings.ini`, `gtk-4.0/settings.ini`): Adwaita-dark, breeze-dark icons, JetBrainsMono and dark mode preferred.
+- On Wayland, GTK apps read the icons and the font from gsettings, not from `settings.ini`. Run this once on a new machine:
+
+  ```bash
+  gsettings set org.gnome.desktop.interface icon-theme 'breeze-dark'
+  gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono Nerd Font 10'
+  ```
+
+- **Qt** (`qt6ct/qt6ct.conf`): Fusion style with the `HyprPalette` color scheme from `~/.local/share/color-schemes/`. Not applied yet: `hyprland.lua` sets `QT_QPA_PLATFORMTHEME=kde`, which needs KDE packages that are not installed (tracked in [#3](../../issues/3)).
 
 ## Workflow
 
