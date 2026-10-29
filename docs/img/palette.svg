@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="168" viewBox="0 0 960 168" font-family="'JetBrainsMono Nerd Font', 'JetBrains Mono', ui-monospace, monospace">
+  <rect width="960" height="168" rx="16" fill="#1e1e2e"/>
+  <g font-size="13" text-anchor="middle">
+    <g transform="translate(24 24)">
+      <rect width="88" height="88" rx="12" fill="#1e1e2e" stroke="#a08f95" stroke-opacity="0.5"/>
+      <text x="44" y="116" fill="#cdd6f4">bg</text>
+      <text x="44" y="136" fill="#a08f95">#1e1e2e</text>
+    </g>
+    <g transform="translate(128 24)">
+      <rect width="88" height="88" rx="12" fill="#cdd6f4"/>
+      <text x="44" y="116" fill="#cdd6f4">fg</text>
+      <text x="44" y="136" fill="#a08f95">#cdd6f4</text>
+    </g>
+    <g transform="translate(232 24)">
+      <rect width="88" height="88" rx="12" fill="#8a63c7"/>
+      <text x="44" y="116" fill="#cdd6f4">accent</text>
+      <text x="44" y="136" fill="#a08f95">#8a63c7</text>
+    </g>
+    <g transform="translate(336 24)">
+      <rect width="88" height="88" rx="12" fill="#6f9f98"/>
+      <text x="44" y="116" fill="#cdd6f4">accent2</text>
+      <text x="44" y="136" fill="#a08f95">#6f9f98</text>
+    </g>
+    <g transform="translate(440 24)">
+      <rect width="88" height="88" rx="12" fill="#c44532"/>
+      <text x="44" y="116" fill="#cdd6f4">red</text>
+      <text x="44" y="136" fill="#a08f95">#c44532</text>
+    </g>
+    <g transform="translate(544 24)">
+      <rect width="88" height="88" rx="12" fill="#8e6f86"/>
+      <text x="44" y="116" fill="#cdd6f4">purple</text>
+      <text x="44" y="136" fill="#a08f95">#8e6f86</text>
+    </g>
+    <g transform="translate(648 24)">
+      <rect width="88" height="88" rx="12" fill="#8c6e6e"/>
+      <text x="44" y="116" fill="#cdd6f4">neutral</text>
+      <text x="44" y="136" fill="#a08f95">#8c6e6e</text>
+    </g>
+    <g transform="translate(752 24)">
+      <rect width="88" height="88" rx="12" fill="#a08f95"/>
+      <text x="44" y="116" fill="#cdd6f4">gray</text>
+      <text x="44" y="136" fill="#a08f95">#a08f95</text>
+    </g>
+    <g transform="translate(856 24)">
+      <rect width="80" height="88" rx="12" fill="#c7ced6"/>
+      <text x="40" y="116" fill="#cdd6f4">light</text>
+      <text x="40" y="136" fill="#a08f95">#c7ced6</text>
+    </g>
+  </g>
+</svg>
