@@ -47,7 +47,6 @@ hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd(lidScript), { locked = true })
 
 local terminal    = "kitty"
 local fileManager = "thunar"
-local menu        = "hyprlauncher"
 
 -- Color palette
 local bg      = "rgba(1e1e2eff)"
@@ -70,6 +69,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd("mako")
     hl.exec_cmd("hypridle")
+    hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
     hl.exec_cmd("wal -i {{ .chezmoi.homeDir }}/Img/wallhaven-9oo8k1.jpg")
     hl.exec_cmd(lidScript)
 end)
@@ -94,7 +94,7 @@ end)
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
-hl.env("QT_QPA_PLATFORMTHEME", "kde")
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
 hl.layer_rule({
     name  = "blur-waybar",
@@ -254,7 +254,6 @@ hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 -- (En tu config antigua SUPER+J también era togglesplit, pero lo pisaba movefocus abajo;
 --  se deja solo movefocus para que siga funcionando igual.)
