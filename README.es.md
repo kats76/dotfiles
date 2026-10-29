@@ -4,10 +4,16 @@
 
 [Read in English](README.md)
 
-Mi configuración personal, gestionada con [chezmoi](https://www.chezmoi.io/): un solo repo y la misma configuración en cualquier máquina con un comando.
+Mi configuración de Arch Linux + Hyprland, gestionada con [chezmoi](https://www.chezmoi.io/). Una sola paleta y una sola fuente en todo: el gestor de ventanas, la barra, el lanzador, la terminal, el menú de salida y la pantalla de login.
 
-- **Escritorio:** Arch Linux + Hyprland con una sola paleta y una sola fuente en todo: el gestor de ventanas, la barra, el lanzador, la terminal, el menú de salida y la pantalla de login.
-- **Editor:** Neovim (LazyVim).
+![Escritorio vacío con la barra](docs/img/desktop.webp)
+
+Este README también es una guía: cada componente tiene su captura, qué está configurado y qué cambiar para adaptarlo a tu equipo.
+
+- [Instalación](#instalación-arch-linux)
+- [Paleta y fuentes](#paleta-y-fuentes)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Lanzador](#lanzador-de-apps-wofi) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [GTK y Qt](#gtk-y-qt)
+- [Flujo de trabajo](#flujo-de-trabajo) · [Nunca va al repo](#nunca-va-al-repo-) · [Otras máquinas](#otras-máquinas)
 
 ## Qué hay aquí
 
@@ -16,29 +22,16 @@ Mi configuración personal, gestionada con [chezmoi](https://www.chezmoi.io/): u
 | `dot_config/hypr/` | `~/.config/hypr/` | Hyprland 0.57+ en Lua, wallpaper y el script de la tapa |
 | `dot_config/waybar/` | `~/.config/waybar/` | Barra superior |
 | `dot_config/sddm-silent/` | `~/.config/sddm-silent/` | Pantalla de login (tema SilentSDDM) y su instalador |
-| `dot_config/kitty`, `wofi`, `wlogout`, `cava` | `~/.config/…` | Terminal, lanzador de apps, menú de salida, visualizador de audio |
+| `dot_config/wlogout/`, `wofi/` | `~/.config/…` | Menú de salida y lanzador de apps |
+| `dot_config/kitty/`, `cava/` | `~/.config/…` | Terminal y visualizador de audio |
+| `dot_config/nvim/` | `~/.config/nvim/` | Neovim con lazy.nvim y Catppuccin |
 | `dot_config/fontconfig`, `gtk-3.0`, `gtk-4.0`, `qt6ct` | `~/.config/…` | Para que las apps GTK y Qt sigan el mismo estilo |
 | `dot_local/share/color-schemes/` | `~/.local/share/color-schemes/` | Esquema de color de Qt con la paleta |
 | `dot_zshrc`, `dot_bashrc` | `~/.zshrc`, `~/.bashrc` | Shell |
-| `dot_config/nvim/` | `~/.config/nvim/` | Neovim (LazyVim) |
 
 > Nomenclatura de chezmoi: `dot_` = `.`, `private_` = sin permisos para otros, `executable_` = ejecutable, `.tmpl` = plantilla.
 
-## Paleta
-
-| Nombre | Color | Para qué |
-| --- | --- | --- |
-| bg | `#1e1e2e` | Fondos |
-| fg | `#cdd6f4` | Texto |
-| accent | `#8a63c7` | Borde activo, selección, botones con foco |
-| accent2 | `#6f9f98` | Segundo acento, hover |
-| red | `#c44532` | Urgente, errores |
-| gray | `#a08f95` | Elementos inactivos |
-| light | `#c7ced6` | Texto secundario |
-
-Fuente: **JetBrainsMono Nerd Font**, con Noto Color Emoji y Source Han Sans JP (japonés) de respaldo. Sin una fuente japonesa, el texto en japonés sale en cuadros vacíos en la terminal, el navegador y el título de la ventana en waybar.
-
-## Instalar el escritorio (Arch Linux)
+## Instalación (Arch Linux)
 
 Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el sistema a medio actualizar rompe SDDM.
 
@@ -47,29 +40,68 @@ sudo pacman -S chezmoi hyprland hyprpaper waybar kitty wofi cava brightnessctl p
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
 yay -S wlogout sddm-silent-theme python-pywal
-chezmoi init --apply kats76
+chezmoi init kats76
+chezmoi diff        # revisar qué cambiaría
+chezmoi apply
 ```
 
-`chezmoi diff` enseña qué cambiaría antes de aplicar. Las rutas del home son plantillas (`{{ .chezmoi.homeDir }}`), así que funciona con otro nombre de usuario.
+Las rutas del home son plantillas (`{{ .chezmoi.homeDir }}`), así que funciona con otro nombre de usuario. Varios valores son de **mi** hardware (monitores, interfaz de red, batería): cada sección de abajo dice cuáles son y cómo averiguar los tuyos. Cámbialos antes del primer inicio de sesión.
 
 ### Wallpaper
 
-El wallpaper no está en el repo. Descárgalo de [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) en `~/Img/wallhaven-9oo8k1.jpg`, o cambia la ruta en `hyprpaper.conf`, `hyprland.lua` y `sddm-silent/install.sh` por la tuya.
+El wallpaper no está en el repo. Descárgalo de [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) en `~/Img/wallhaven-9oo8k1.jpg`, o usa el tuyo y cambia la ruta en tres sitios: `hypr/hyprpaper.conf`, la línea `wal -i` de `hypr/hyprland.lua` y `WALLPAPER` en `sddm-silent/install.sh`.
 
-### Pantalla de login
+## Paleta y fuentes
 
-SDDM corre con su propio usuario, así que su tema no puede vivir en tu home. `install.sh` lo copia a su sitio con `sudo`:
+![Paleta](docs/img/palette.svg)
+
+| Nombre | Color | Para qué |
+| --- | --- | --- |
+| bg | `#1e1e2e` | Fondos |
+| fg | `#cdd6f4` | Texto |
+| accent | `#8a63c7` | Borde activo, selección, botones con foco |
+| accent2 | `#6f9f98` | Segundo acento, hover, enlaces |
+| red | `#c44532` | Urgente, errores |
+| purple | `#8e6f86` | Magenta de la terminal |
+| neutral | `#8c6e6e` | Borde inactivo de la terminal, amarillo de la terminal |
+| gray | `#a08f95` | Elementos inactivos, bordes de los módulos |
+| light | `#c7ced6` | Texto secundario |
+
+**Cambiar la paleta.** No hay un fichero central: cada programa tiene su propia copia de los colores. Están en `hypr/hyprland.lua` (las líneas `local bg = …`), `waybar/style.css` (`@define-color`), `kitty/kitty.conf`, `wofi/style.css` y `sddm-silent/hypr.conf`. El esquema de Qt `HyprPalette.colors` usa los mismos colores en RGB. Para cambiar un color en todas partes:
 
 ```bash
-~/.config/sddm-silent/install.sh
-cd /usr/share/sddm/themes/silent && ./test.sh   # vista previa sin cerrar sesión
+chezmoi cd
+grep -rl --exclude-dir=.git 8a63c7 .                            # dónde se usa el acento
+grep -rl --exclude-dir=.git 8a63c7 . | xargs sed -i 's/8a63c7/ff79c6/g'   # reemplazarlo
+chezmoi apply
 ```
 
-Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. `Xsetup` deja el login en una sola pantalla: con la tapa cerrada ignora la del portátil y elige el monitor de mayor resolución.
+`wofi/style.css` también escribe el fondo como `rgba(30, 30, 46, 0.96)`, así que ese hay que cambiarlo a mano.
 
-### Atajos
+**Fuentes:** **JetBrainsMono Nerd Font** en todo, con Noto Color Emoji y Source Han Sans JP (japonés) de respaldo, definidas en `fontconfig/fonts.conf`. Sin una fuente japonesa, el texto en japonés sale en cuadros vacíos en la terminal, el navegador y el título de la ventana en waybar. Las apps que ya estaban abiertas al instalar una fuente hay que reiniciarlas para que la usen.
 
-`Super` es el modificador principal.
+## Hyprland
+
+![Ventanas en mosaico: cava, Neovim y fastfetch](docs/img/tiling.webp)
+
+`hypr/hyprland.lua`. Desde la 0.57, Hyprland solo lee el fichero Lua y se ignora `hyprland.conf`.
+
+**Qué está configurado**
+
+- Distribución `dwindle`, huecos de 5 px entre ventanas y de 20 px con el borde de la pantalla, bordes de 2 px con un degradado `accent` → `accent2` y esquinas redondeadas (10 px).
+- Desenfoque detrás de waybar.
+- Autoarranque: hyprpaper, waybar, pywal con el wallpaper y el script de la tapa.
+- Tapa: `scripts/lid.sh` apaga la pantalla del portátil con la tapa cerrada si hay un monitor externo conectado.
+
+**Qué cambiar para tu equipo**
+
+- **Monitores.** Mis tres monitores se definen por su descripción (`desc:…`). Lista los tuyos con `hyprctl monitors all` y edita los bloques `hl.monitor({ … })`: `output`, `mode`, `position` y `scale`. El último bloque (`output = ""`) recoge cualquier otro monitor, así que con una sola pantalla funciona sin tocar nada.
+- **Pantalla del portátil.** `scripts/lid.sh` repite el modo, la posición y la escala de `eDP-1`: mantenlo igual que su bloque `hl.monitor`.
+- **Apps.** `local terminal`, `fileManager` y `menu` al principio del fichero.
+- **Teclado.** `kb_layout = "us"` en el bloque `input` (por ejemplo `"es"`).
+- **Comprobar antes de recargar:** `Hyprland --verify-config -c ~/.config/hypr/hyprland.lua` y después `hyprctl reload`. El CI hace la misma comprobación en cada pull request. Los stubs de la API están en `/usr/share/hypr/stubs/hl.meta.lua`.
+
+**Atajos.** `Super` es el modificador principal.
 
 | Teclas | Acción |
 | --- | --- |
@@ -91,15 +123,78 @@ Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. 
 
 Las teclas de medios, volumen y brillo también funcionan, incluso con la sesión bloqueada.
 
-### Hyprland 0.57 y Lua
+## Waybar
 
-Desde la 0.57, Hyprland solo lee `hyprland.lua` y se ignora `hyprland.conf`. Para comprobar la config antes de recargar:
+![Waybar](docs/img/waybar.webp)
+
+`waybar/config.jsonc` y `waybar/style.css`.
+
+**Qué está configurado:** los escritorios a la izquierda, el título de la ventana activa en el centro y, a la derecha, volumen, brillo, Wi-Fi, CPU, memoria, batería, reloj y bandeja. Cada módulo es una caja redondeada con un borde fino `gray`; el escritorio activo va en `accent` y uno urgente en `red`.
+
+**Qué cambiar para tu equipo:** tres módulos apuntan a mi hardware.
+
+| Módulo | Clave | Mi valor | Cómo ver el tuyo |
+| --- | --- | --- | --- |
+| `network` | `interface` | `wlan0` | `ip link` |
+| `backlight` | `device` | `intel_backlight` | `ls /sys/class/backlight` |
+| `battery` | `battery` / `adapter` | `BAT0` / `AC0` | `ls /sys/class/power_supply` |
+
+En un PC de sobremesa sin batería ni brillo, quita esos módulos de `modules-right`. Para recargar: `pkill -SIGUSR2 waybar`.
+
+## Pantalla de login (SDDM)
+
+![Pantalla de login](docs/img/login.webp)
+
+El tema [SilentSDDM](https://github.com/uiriansan/SilentSDDM) con la misma paleta y fuente. `sddm-silent/hypr.conf` tiene los ajustes del tema: wallpaper desenfocado y oscurecido, reloj `HH:mm` y la fecha en español (`dddd, d 'de' MMMM`, se cambia en `[LockScreen.Date]`). Todas las opciones están en la [wiki del tema](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
+
+SDDM corre con su propio usuario, así que su tema no puede vivir en tu home. `install.sh` copia la config, el wallpaper y el `Xsetup` a su sitio con `sudo`:
 
 ```bash
-Hyprland --verify-config -c ~/.config/hypr/hyprland.lua
+~/.config/sddm-silent/install.sh
+cd /usr/share/sddm/themes/silent && ./test.sh   # vista previa sin cerrar sesión
 ```
 
-El CI ejecuta la misma comprobación en cada pull request. Los stubs de la API están en `/usr/share/hypr/stubs/hl.meta.lua`. El autoarranque va en `hl.on("hyprland.start", ...)` y no se vuelve a ejecutar con `hyprctl reload`.
+Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. `Xsetup` deja el login en una sola pantalla: con la tapa cerrada ignora la del portátil, y elige el monitor de mayor resolución. No hay que cambiar nada por equipo.
+
+## Menú de salida (wlogout)
+
+![Menú de salida](docs/img/wlogout.webp)
+
+`Super + Backspace`. `wlogout/layout` define las seis acciones y su letra (`l` bloquear, `e` cerrar sesión, `u` suspender, `h` hibernar, `s` apagar, `r` reiniciar). Cerrar sesión usa `hyprshutdown` si está instalado y, si no, sale de Hyprland directamente.
+
+`wlogout/style.css` es el estilo por defecto de wlogout con un cambio: solo se resalta el botón que tiene el ratón encima (por defecto también se resaltaba el foco de teclado, así que Lock parecía siempre seleccionado). Los colores se cambian ahí.
+
+## Lanzador de apps (wofi)
+
+![Lanzador de apps](docs/img/wofi.webp)
+
+`Super + Space`. `wofi/config` fija el tamaño (560×420), la posición (centro) y la terminal para las apps de terminal; `wofi/style.css` usa la paleta, con la entrada seleccionada en `accent`.
+
+## Terminal y shell
+
+![kitty con fastfetch](docs/img/fastfetch.webp)
+
+- **kitty** (`kitty/kitty.conf`): JetBrainsMono 12, fondo al 80 % de opacidad y los 16 colores de la terminal adaptados a la paleta. Ajusta `font_size` y `background_opacity` a tu gusto.
+- **zsh** (`.zshrc`): Oh My Zsh con el plugin `git`, el prompt [starship](https://starship.rs) y zsh-autosuggestions. Añade `~/.local/bin` y `~/.npm-global/bin` al `PATH`.
+- **fastfetch** usa su config por defecto; no hay fichero suyo en el repo.
+- **cava** (`cava/config`) usa sus valores por defecto más algunos shaders y temas. Si no muestra barras mientras suena música, pon `method = pipewire` en su sección `[input]`.
+
+## Neovim
+
+![Neovim](docs/img/nvim.webp)
+
+`nvim/`, una config pequeña propia, no una distribución:
+
+- `init.lua` instala [lazy.nvim](https://github.com/folke/lazy.nvim) en el primer arranque y carga cada fichero de `lua/plugins/`.
+- `lua/plugins/ui.lua`: el tema Catppuccin Mocha y los iconos de archivos.
+- `lua/config/options.lua`: números de línea relativos, sangría de 2 espacios y 10 líneas de margen al hacer scroll. La tecla líder es `Espacio`.
+
+Para añadir un plugin, crea un fichero en `lua/plugins/` que devuelva su especificación.
+
+## GTK y Qt
+
+- **GTK 3/4** (`gtk-3.0/settings.ini`, `gtk-4.0/settings.ini`): Adwaita-dark con iconos breeze-dark y modo oscuro preferido.
+- **Qt** (`qt6ct/qt6ct.conf`): estilo Fusion con el esquema de color `HyprPalette` de `~/.local/share/color-schemes/`.
 
 ## Flujo de trabajo
 
@@ -140,8 +235,6 @@ Credenciales y estado local. **Nunca** `chezmoi add` sobre:
 - Imágenes sin licencia para redistribuirlas (como el wallpaper)
 
 Si algún día hace falta una config con secretos, se usa una plantilla de chezmoi que lea el secreto de un gestor (1Password, Bitwarden, `pass`), nunca el secreto en texto plano.
-
----
 
 ## Otras máquinas
 
