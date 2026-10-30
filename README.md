@@ -162,7 +162,7 @@ Run it again after updating `sddm-silent-theme` or changing the wallpaper. `Xset
 
 `Super + Backspace`. `wlogout/layout` sets the six actions and their letter (`l` lock, `e` logout, `u` suspend, `h` hibernate, `s` shutdown, `r` reboot). Logout uses `hyprshutdown` if it is installed, and otherwise exits Hyprland directly.
 
-`wlogout/style.css` is the default wlogout style with one change: only the button under the mouse is highlighted (by default the keyboard focus was highlighted too, so Lock always looked selected). Change the colors there.
+`wlogout/style.css` uses the palette: translucent `bg` background, rounded cards with a thin `gray` border like the waybar modules, JetBrainsMono, and the button under the mouse turns `accent`. Only the mouse highlights a button: by default the keyboard focus did too, so Lock always looked selected.
 
 ## Lock screen and idle
 

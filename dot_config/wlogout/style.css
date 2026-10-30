@@ -1,27 +1,32 @@
+/* Menú de salida con la paleta de Hyprland: tarjetas como los módulos de waybar */
 * {
 	background-image: none;
 	box-shadow: none;
+	font-family: "JetBrainsMono Nerd Font";
+	font-size: 14px;
 }
 
 window {
-	background-color: rgba(12, 12, 12, 0.9);
+	background-color: alpha(#1e1e2e, 0.85);
 }
 
 button {
-    border-radius: 0;
-    border-color: black;
-	text-decoration-color: #FFFFFF;
-    color: #FFFFFF;
-	background-color: #1E1E1E;
-	border-style: solid;
-	border-width: 1px;
+	margin: 12px;
+	border-radius: 10px;
+	border: 1px solid alpha(#a08f95, 0.35);
+	text-decoration-color: #cdd6f4;
+	color: #cdd6f4;
+	background-color: alpha(#1e1e2e, 0.95);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 25%;
 }
 
+/* Solo el botón con el ratón encima: el foco de teclado no se resalta (Lock lo tiene al abrir) */
 button:hover, button:active {
-	background-color: #3700B3;
+	background-color: #8a63c7;
+	border-color: #8a63c7;
+	color: #c7ced6;
 	outline-style: none;
 }
 
