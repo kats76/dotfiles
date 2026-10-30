@@ -131,14 +131,14 @@ Media, volume and brightness keys work too, even on the lock screen.
 
 **What is configured:** workspaces on the left, the active window title in the center, and on the right volume, brightness, Wi-Fi, Bluetooth, CPU, memory, battery, clock and tray.
 
-Four modules open a menu with a click (scripts in `waybar/scripts/`):
+Four modules open something with a click (scripts in `waybar/scripts/`). Volume, Wi-Fi and Bluetooth are small panels that come out of their button, with the palette, and fit any monitor (also the vertical one):
 
-- **Wi-Fi** (`wifi-menu.sh`): nearby networks with signal and lock, the connected one marked. Saved networks connect directly; new ones ask for the password. Also turns Wi-Fi on and off.
-- **Bluetooth** (`bluetooth-menu.sh`): paired devices to connect or disconnect, turn Bluetooth on and off, and pair a new device with blueman. When connected, the module shows the device name and its battery.
-- **Battery** (`power-menu.sh`): the three power-profiles-daemon modes (performance, balanced, power saver) with the current one marked.
-- **Volume** (`sound-panel.py`): a small panel right under the icon, with a volume slider, a mute button and the audio outputs (speakers, the monitor over HDMI, Bluetooth headphones). Picking an output moves what is already playing to it. HDMI outputs without a screen are hidden. It closes with `Esc`, when the mouse leaves it or with another click on the icon. The mouse wheel over the icon still changes the volume. It is Python with GTK 3 and gtk-layer-shell; the colors are at the top of the script.
+- **Volume** (`sound-panel.py`): volume slider, mute button and the audio outputs (speakers, the monitor over HDMI, Bluetooth headphones). Picking an output moves what is already playing to it. HDMI outputs without a screen are hidden. The mouse wheel over the icon still changes the volume.
+- **Wi-Fi** (`wifi-panel.py`): opens instantly with the networks the system already knows and scans in the background. Switch to turn Wi-Fi on and off, the connected network on top with a Disconnect button, and the password of a new network is typed inside the panel.
+- **Bluetooth** (`bluetooth-panel.py`): power switch, paired devices with their battery, connect or disconnect with a click, and pair a new one with blueman. In the bar the module only shows the icon and the headphones battery, so it fits on narrow monitors; the name is in the tooltip.
+- **Battery** (`power-menu.sh`, wofi): the three power-profiles-daemon modes (performance, balanced, power saver) with the current one marked.
 
-Every action shows a mako notification. Each module is a rounded box with a thin `gray` border; the active workspace is `accent` and an urgent one is `red`.
+The three panels share `waybar/scripts/panel.py`: position under the button, size, colors, closing (`Esc`, moving the mouse away or another click on the same button) and only one panel at a time; clicking another button switches panels. They are Python with GTK 3 and gtk-layer-shell. Every action shows a mako notification when something fails. Each module is a rounded box with a thin `gray` border; the active workspace is `accent` and an urgent one is `red`.
 
 **Change for your machine:** three modules point to my hardware.
 

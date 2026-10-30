@@ -37,19 +37,19 @@
     "format-disconnected": "󰤭",
     "tooltip-format-wifi": "{essid}\nClic: redes Wi-Fi",
     "tooltip-format-disconnected": "Sin conexión\nClic: redes Wi-Fi",
-    "on-click": "~/.config/waybar/scripts/wifi-menu.sh"
+    "on-click": "~/.config/waybar/scripts/wifi-panel.py"
   },
 
   "bluetooth": {
     "format": "󰂯",
     "format-off": "󰂲",
     "format-disabled": "󰂲",
-    "format-connected": "󰂱 {device_alias}",
-    "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+    "format-connected": "󰂱",
+    "format-connected-battery": "󰂱 {device_battery_percentage}%",
     "tooltip-format": "Bluetooth\nClic: dispositivos",
     "tooltip-format-connected": "{device_enumerate}\nClic: dispositivos",
     "tooltip-format-enumerate-connected": "{device_alias}",
-    "on-click": "~/.config/waybar/scripts/bluetooth-menu.sh"
+    "on-click": "~/.config/waybar/scripts/bluetooth-panel.py"
   },
 
   "pulseaudio": {
