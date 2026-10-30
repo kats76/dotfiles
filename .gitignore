@@ -1,6 +1,3 @@
 # Caché de Python (py_compile, CI)
 __pycache__/
 
-# Tema de Firefox empaquetado o firmado (se genera, ver README)
-firefox/*.zip
-firefox/*.xpi
