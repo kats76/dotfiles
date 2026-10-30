@@ -36,7 +36,7 @@ This README is also a guide: each component has a screenshot, what is configured
 Do a full `sudo pacman -Syu` first: installing a Qt package on a partially upgraded system breaks SDDM.
 
 ```bash
-sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
+sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl grim slurp wl-clipboard \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard blueman power-profiles-daemon python-gobject gtk-layer-shell
 yay -S wlogout sddm-silent-theme
@@ -120,8 +120,10 @@ chezmoi apply
 | `Super + Shift + 1…0` | Send window to workspace |
 | `Super + S` / `Super + Shift + S` | Scratchpad: show / send window |
 | `Super + M` | Exit Hyprland |
+| `Print` | Screenshot of an area to the clipboard |
+| `Super + Print` | Screenshot of an area, saved to `~/Img/Screenshots` and copied |
 
-Media, volume and brightness keys work too, even on the lock screen.
+Media, volume and brightness keys work too, even on the lock screen. Screenshots use `hypr/scripts/screenshot.sh` (grim and slurp); `Esc` cancels the selection.
 
 ## Waybar
 
