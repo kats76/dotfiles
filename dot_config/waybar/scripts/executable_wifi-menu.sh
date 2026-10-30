@@ -15,20 +15,28 @@ fi
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
-# Campos IN-USE:SIGNAL:SECURITY:SSID. nmcli escapa los ':' del nombre como '\:'.
+# Red conectada: se pregunta a la tarjeta, porque la columna IN-USE de la lista puede salir vacía
+dev=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2 == "wifi" { print $1; exit }')
+conn=$(nmcli -g GENERAL.CONNECTION device show "$dev" 2>/dev/null)
+active=""
+[ -n "$conn" ] && active=$(nmcli -g 802-11-wireless.ssid connection show "$conn" 2>/dev/null)
+
+# Campos SIGNAL:SECURITY:SSID. nmcli escapa los ':' del nombre como '\:'.
 # Cada línea: texto del menú <TAB> SSID
-nmcli -t -f IN-USE,SIGNAL,SECURITY,SSID device wifi list --rescan auto \
+nmcli -t -f SIGNAL,SECURITY,SSID device wifi list --rescan auto \
     | sed 's/\\:/\x01/g' \
-    | awk -F: '$4 != "" && !seen[$4]++ {
-        s = $2 + 0
+    | awk -F: -v active="$active" '{ gsub("\001", ":", $3) } $3 != "" && !seen[$3]++ {
+        s = $1 + 0
         icon = s >= 80 ? "󰤨" : s >= 60 ? "󰤥" : s >= 40 ? "󰤢" : s >= 20 ? "󰤟" : "󰤯"
-        lock = ($3 == "" || $3 == "--") ? "" : "  󰌾"
-        mark = ($1 == "*") ? "  (conectada)" : ""
-        gsub("\001", ":", $4)
-        printf "%s  %s%s%s\t%s\n", icon, $4, lock, mark, $4
+        lock = ($2 == "" || $2 == "--") ? "" : "  󰌾"
+        mark = ($3 == active) ? "  (conectada)" : ""
+        printf "%s  %s%s%s\t%s\n", icon, $3, lock, mark, $3
     }' > "$tmp/list"
 
-choice=$({ cut -f1 "$tmp/list"; printf '󰖪  Apagar Wi-Fi\n'; } | menu "Wi-Fi") || exit 0
+# Altura justa hasta 10 líneas; con más redes, el menú se desplaza
+n=$(($(wc -l < "$tmp/list") + 1))
+[ "$n" -gt 10 ] && n=10
+choice=$({ cut -f1 "$tmp/list"; printf '󰖪  Apagar Wi-Fi\n'; } | menu "Wi-Fi" "$n") || exit 0
 [ -z "$choice" ] && exit 0
 
 if [ "$choice" = "󰖪  Apagar Wi-Fi" ]; then

@@ -24,7 +24,9 @@ bluetoothctl devices Paired | while read -r _ mac name; do
     fi
 done > "$tmp/list"
 
-choice=$({ cut -f1 "$tmp/list"; printf '󰂳  Emparejar un dispositivo nuevo\n󰂲  Apagar Bluetooth\n'; } | menu "Bluetooth") || exit 0
+# Altura justa: los dispositivos más las dos opciones fijas
+n=$(($(wc -l < "$tmp/list") + 2))
+choice=$({ cut -f1 "$tmp/list"; printf '󰂳  Emparejar un dispositivo nuevo\n󰂲  Apagar Bluetooth\n'; } | menu "Bluetooth" "$n") || exit 0
 [ -z "$choice" ] && exit 0
 
 case "$choice" in

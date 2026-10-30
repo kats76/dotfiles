@@ -12,7 +12,7 @@ lines=$(printf '%s\t%s\n' \
     | awk -F'\t' -v c="$current" '{ print $1 ($2 == c ? "  (actual)" : "") "\t" $2 }')
 
 choice=$(printf '%s\n' "$lines" | cut -f1 \
-    | wofi --dmenu --cache-file /dev/null --prompt "Modo de energía" --width 360 --lines 4) || exit 0
+    | wofi --dmenu --cache-file /dev/null --prompt "Modo de energía" --width 360 --lines 3) || exit 0
 [ -z "$choice" ] && exit 0
 
 profile=$(printf '%s\n' "$lines" | awk -F'\t' -v c="$choice" '$1 == c { print $2 }')
