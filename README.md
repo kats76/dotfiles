@@ -133,6 +133,8 @@ Media, volume and brightness keys work too, even on the lock screen.
 
 Four modules open a small panel with a click (scripts in `waybar/scripts/`). The panels come out of their button, use the palette and fit any monitor (also the vertical one):
 
+![The volume, Bluetooth, battery and Wi-Fi panels](docs/img/panels.webp)
+
 - **Volume** (`sound-panel.py`): volume slider, mute button and the audio outputs (speakers, the monitor over HDMI, Bluetooth headphones). Picking an output moves what is already playing to it. HDMI outputs without a screen are hidden. The mouse wheel over the icon still changes the volume.
 - **Wi-Fi** (`wifi-panel.py`): opens instantly with the networks the system already knows and scans in the background. Switch to turn Wi-Fi on and off, the connected network on top with a Disconnect button, and the password of a new network is typed inside the panel.
 - **Bluetooth** (`bluetooth-panel.py`): power switch, paired devices with their battery, connect or disconnect with a click, and pair a new one with blueman. In the bar the module only shows the icon and the headphones battery, so it fits on narrow monitors; the name is in the tooltip.
@@ -217,6 +219,8 @@ xdg-mime default swayimg.desktop $(grep '^MimeType=' /usr/share/applications/swa
 - **mako** (`mako/config`): notifications centered right under the window title in waybar, with the palette, JetBrainsMono and the same 10 px corners as the bar modules. Normal ones have an `accent` border and close after 5 s, low priority `gray`, critical `red` and they stay until clicked. Reload with `makoctl reload`.
 - **fastfetch** runs with its default config; there is no file for it in this repo.
 - **cava** (`cava/config`) uses its defaults plus a few shaders and themes. It reads the audio from PipeWire (`method = pipewire` in `[input]`).
+
+![mako notification under the bar](docs/img/mako.webp)
 
 ## Neovim
 

@@ -133,6 +133,8 @@ Las teclas de medios, volumen y brillo también funcionan, incluso con la sesió
 
 Cuatro módulos abren un panel pequeño con un clic (scripts en `waybar/scripts/`). Los paneles salen de su botón, usan la paleta y caben en cualquier monitor (también en el vertical):
 
+![Los paneles de volumen, Bluetooth, batería y Wi-Fi](docs/img/panels.webp)
+
 - **Volumen** (`sound-panel.py`): barra de volumen, botón de silencio y las salidas de audio (altavoces, el monitor por HDMI, cascos Bluetooth). Al elegir una salida, lo que ya suena pasa a ella. Las salidas HDMI sin pantalla no se muestran. La rueda del ratón sobre el icono sigue cambiando el volumen.
 - **Wi-Fi** (`wifi-panel.py`): se abre al instante con las redes que el sistema ya conoce y escanea en segundo plano. Interruptor para encender y apagar el Wi-Fi, la red conectada arriba con un botón para desconectar, y la contraseña de una red nueva se escribe dentro del panel.
 - **Bluetooth** (`bluetooth-panel.py`): interruptor de encendido, dispositivos emparejados con su batería, conectar o desconectar con un clic, y emparejar uno nuevo con blueman. En la barra, el módulo solo muestra el icono y la batería de los cascos, para que quepa en monitores estrechos; el nombre está en el tooltip.
@@ -217,6 +219,8 @@ xdg-mime default swayimg.desktop $(grep '^MimeType=' /usr/share/applications/swa
 - **mako** (`mako/config`): notificaciones centradas justo bajo el título de la ventana en waybar, con la paleta, JetBrainsMono y las mismas esquinas de 10 px que los módulos de la barra. Las normales llevan borde `accent` y se cierran a los 5 s; las de baja prioridad, `gray`; las críticas, `red`, y se quedan hasta hacer clic. Para recargar: `makoctl reload`.
 - **fastfetch** usa su config por defecto; no hay fichero suyo en el repo.
 - **cava** (`cava/config`) usa sus valores por defecto más algunos shaders y temas. Lee el audio de PipeWire (`method = pipewire` en `[input]`).
+
+![Notificación de mako bajo la barra](docs/img/mako.webp)
 
 ## Neovim
 
