@@ -123,7 +123,7 @@ chezmoi apply
 | `Impr Pant` | Captura de un área al portapapeles |
 | `Super + Impr Pant` | Captura de un área, guardada en `~/Img/Screenshots` y copiada |
 
-Las teclas de medios, volumen y brillo también funcionan, incluso con la sesión bloqueada. Las capturas usan `hypr/scripts/screenshot.sh` (grim y slurp); `Esc` cancela la selección.
+Las teclas de medios, volumen y brillo también funcionan, incluso con la sesión bloqueada. Volumen, micrófono y brillo muestran un indicador abajo en el centro (`waybar/scripts/osd.py`): icono, barra de nivel y porcentaje, que desaparece a los 1,5 s. Al mantener la tecla se actualiza el mismo indicador en vez de abrir otros. Las capturas usan `hypr/scripts/screenshot.sh` (grim y slurp); `Esc` cancela la selección.
 
 ## Waybar
 
