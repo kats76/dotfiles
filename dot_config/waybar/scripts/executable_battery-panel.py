@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""Panel de batería (clic en el módulo battery de waybar).
+
+Porcentaje, barra de carga, estado (cargando, descargando o parada por el límite de carga),
+los tres modos de power-profiles-daemon y, al pie, límite de carga, salud y ciclos.
+Se actualiza solo mientras está abierto. Lee /sys/class/power_supply; la base común está en panel.py.
+"""
+
+import glob
+import os
+
+from panel import GLib, Gtk, Panel, clear, item, label, main, notify, run, run_async, run_ok
+
+REFRESH_MS = 5000
+LOW = 20  # por debajo, la barra se pone roja
+
+PROFILES = (("performance", "󰓅", "Rendimiento"), ("balanced", "󰾅", "Equilibrado"),
+            ("power-saver", "󰾆", "Ahorro"))
+
+# Barra de carga: accent2 normal, red con poca batería (se añade al CSS común de panel.py)
+CSS = b"""
+#panel levelbar trough { background-color: #313244; border: none; border-radius: 6px; min-height: 8px; }
+#panel levelbar block.filled { background-color: #6f9f98; border-radius: 6px; }
+#panel levelbar.low block.filled { background-color: #c44532; }
+#panel levelbar block.empty { background-color: transparent; }
+"""
+
+
+def battery_dir():
+    found = sorted(glob.glob("/sys/class/power_supply/BAT*"))
+    return found[0] if found else None
+
+
+def read(path, name, default=None):
+    try:
+        with open(os.path.join(path, name)) as f:
+            return f.read().strip()
+    except OSError:
+        return default
+
+
+def duration(hours):
+    minutes = int(hours * 60)
+    return f"{minutes // 60} h {minutes % 60:02d} min" if minutes >= 60 else f"{minutes} min"
+
+
+def battery():
+    """Estado de la batería a partir de sysfs (energía en µWh, potencia en µW)."""
+    path = battery_dir()
+    if not path:
+        return None
+    status = read(path, "status", "Unknown")
+    capacity = int(read(path, "capacity", "0"))
+    limit = read(path, "charge_control_end_threshold")
+    now, full = int(read(path, "energy_now", "0")), int(read(path, "energy_full", "0"))
+    design, power = int(read(path, "energy_full_design", "0")), int(read(path, "power_now", "0"))
+
+    if status == "Charging":
+        text = "Cargando"
+        target = full * int(limit or 100) / 100
+        if power > 0 and target > now:
+            text += f" · lleno en {duration((target - now) / power)}"
+    elif status == "Discharging":
+        text = "Con batería"
+        if power > 0:
+            text += f" · quedan {duration(now / power)}"
+    elif status == "Full":
+        text = "Enchufada · cargada"
+    else:  # "Not charging": enchufada y parada por el límite de carga
+        text = "Enchufada · no carga" + (f" (límite {limit} %)" if limit else "")
+
+    details = []
+    if limit:
+        details.append(f"Límite de carga {limit} %")
+    if design:
+        details.append(f"Salud {round(full * 100 / design)} %")
+    cycles = read(path, "cycle_count")
+    if cycles and cycles != "0":
+        details.append(f"{cycles} ciclos")
+    return {"capacity": capacity, "status": text, "details": " · ".join(details)}
+
+
+class BatteryPanel(Panel):
+    def __init__(self):
+        super().__init__("Batería", "󰁹")
+        self.pct = label("", "value", xalign=1)
+        self.header.pack_end(self.pct, False, False, 0)
+
+        self.level = Gtk.LevelBar(min_value=0, max_value=100)
+        self.level.set_mode(Gtk.LevelBarMode.CONTINUOUS)
+        for offset in ("low", "high", "full"):  # sin los colores por defecto de GTK
+            self.level.remove_offset_value(offset)
+        self.body.add(self.level)
+        self.state = label("", "hint")
+        self.body.add(self.state)
+
+        self.body.add(label("Modo de energía", "section"))
+        self.profiles = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
+        self.body.add(self.profiles)
+        self.details = label("", "section")
+        self.body.add(self.details)
+
+        self.refresh()
+        GLib.timeout_add(REFRESH_MS, self.refresh)
+
+    def refresh(self):
+        bat = battery()
+        if bat:
+            self.pct.set_text(f"{bat['capacity']} %")
+            self.level.set_value(bat["capacity"])
+            context = self.level.get_style_context()
+            (context.add_class if bat["capacity"] < LOW else context.remove_class)("low")
+            self.state.set_text(bat["status"])
+            self.details.set_text(bat["details"])
+        else:
+            self.state.set_text("No se encuentra la batería")
+        self.show_profiles(run("powerprofilesctl", "get").strip())
+        return True  # sigue actualizándose mientras el panel esté abierto
+
+    def show_profiles(self, current):
+        clear(self.profiles)
+        for name, icon, text in PROFILES:
+            self.profiles.add(item(f"{icon}  {text}", name == current, self.on_profile, name, text))
+        self.profiles.show_all()
+
+    def on_profile(self, _button, name, text):
+        def done(result):
+            ok, error = result
+            if not ok:
+                notify("Energía", f"No se pudo cambiar a {text}", error, critical=True)
+            self.refresh()
+        run_async(lambda: run_ok("powerprofilesctl", "set", name), done)
+
+
+if __name__ == "__main__":
+    main(BatteryPanel, "battery", extra_css=CSS)

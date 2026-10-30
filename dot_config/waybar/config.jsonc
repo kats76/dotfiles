@@ -70,7 +70,7 @@
     "battery": "BAT0",
     "adapter": "AC0",
     "tooltip-format": "{timeTo}\nClic: modo de energía",
-    "on-click": "~/.config/waybar/scripts/power-menu.sh",
+    "on-click": "~/.config/waybar/scripts/battery-panel.py",
     "format": "{capacity}% {icon}",
     "format-icons": ["","","","",""]
   },
