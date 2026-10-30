@@ -46,6 +46,7 @@ window#waybar {
 #cpu,
 #memory,
 #network,
+#bluetooth,
 #pulseaudio,
 #backlight,
 #tray {
@@ -65,6 +66,7 @@ window#waybar {
 #clock:hover,
 #battery:hover,
 #network:hover,
+#bluetooth:hover,
 #pulseaudio:hover {
     background: alpha(@accent2, 0.35);
 }

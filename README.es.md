@@ -38,7 +38,7 @@ Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el siste
 ```bash
 sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
-  zsh-autosuggestions sddm qt6-virtualkeyboard
+  zsh-autosuggestions sddm qt6-virtualkeyboard blueman power-profiles-daemon
 yay -S wlogout sddm-silent-theme
 chezmoi init kats76
 chezmoi diff        # revisar qué cambiaría
@@ -49,7 +49,7 @@ Las rutas del home son plantillas (`{{ .chezmoi.homeDir }}`), así que funciona 
 
 ### Wallpaper
 
-El wallpaper no está en el repo. Descárgalo de [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) en `~/Img/wallhaven-9oo8k1.jpg`, o usa el tuyo y cambia la ruta en tres sitios: `hypr/hyprpaper.conf`, `hypr/hyprlock.conf` y `WALLPAPER` en `sddm-silent/install.sh`.
+El wallpaper no está en el repo. Descárgalo de [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) en `~/Img/wallhaven-9oo8k1.jpg`, o usa el tuyo y cambia la ruta en cuatro sitios: `hypr/hyprpaper.conf`, `hypr/hyprlock.conf`, `WALLPAPER` en `sddm-silent/install.sh` y `SOURCE` en `wofi/make-panel.sh`.
 
 ## Paleta y fuentes
 
@@ -129,7 +129,15 @@ Las teclas de medios, volumen y brillo también funcionan, incluso con la sesió
 
 `waybar/config.jsonc` y `waybar/style.css`.
 
-**Qué está configurado:** los escritorios a la izquierda, el título de la ventana activa en el centro y, a la derecha, volumen, brillo, Wi-Fi, CPU, memoria, batería, reloj y bandeja. Cada módulo es una caja redondeada con un borde fino `gray`; el escritorio activo va en `accent` y uno urgente en `red`.
+**Qué está configurado:** los escritorios a la izquierda, el título de la ventana activa en el centro y, a la derecha, volumen, brillo, Wi-Fi, Bluetooth, CPU, memoria, batería, reloj y bandeja.
+
+Tres módulos abren un menú de wofi con un clic (scripts en `waybar/scripts/`):
+
+- **Wi-Fi** (`wifi-menu.sh`): redes cercanas con su señal y candado, la conectada marcada. Las guardadas conectan directamente; las nuevas piden la contraseña. También enciende y apaga el Wi-Fi.
+- **Bluetooth** (`bluetooth-menu.sh`): dispositivos emparejados para conectar o desconectar, encender y apagar el Bluetooth, y emparejar uno nuevo con blueman. Con un dispositivo conectado, el módulo muestra su nombre y su batería.
+- **Batería** (`power-menu.sh`): los tres modos de power-profiles-daemon (rendimiento, equilibrado, ahorro) con el actual marcado.
+
+Cada acción avisa con una notificación de mako. Cada módulo es una caja redondeada con un borde fino `gray`; el escritorio activo va en `accent` y uno urgente en `red`.
 
 **Qué cambiar para tu equipo:** tres módulos apuntan a mi hardware.
 
@@ -175,6 +183,19 @@ Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. 
 ![Lanzador de apps](docs/img/wofi.webp)
 
 `Super + Space`. `wofi/config` fija el tamaño (560×420), la posición (centro) y la terminal para las apps de terminal; `wofi/style.css` usa la paleta, con la entrada seleccionada en `accent`.
+
+El lanzador y los menús de waybar se abren siempre con `wofi/menu.sh`:
+
+- **Un menú a la vez.** Un candado (`flock`, en `wofi/lib.sh`) ignora los clics de más mientras hay un menú abierto o cargándose.
+- **Panel con ilustración.** Si el escritorio activo tiene ventanas, aparece a la izquierda un recorte del wallpaper (`wofi/style-panel.css`, que se añade a `style.css`). En un escritorio vacío ya se ve el wallpaper, así que el menú se abre sin él.
+
+**Cambiar la imagen del panel:** edita `SOURCE` (la imagen) y `CROP` (la zona, `ANCHOxALTO+X+Y`; vacío para un recorte centrado automático) al principio de `wofi/make-panel.sh` y ejecútalo:
+
+```bash
+~/.config/wofi/make-panel.sh
+```
+
+Genera `~/.config/wofi/panel.png`, que no está en el repo (como el wallpaper). Sin la imagen de origen, los menús se abren sin panel.
 
 ## Visor de imágenes (swayimg)
 

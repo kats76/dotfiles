@@ -1,0 +1,12 @@
+/* Panel de la ilustración a la izquierda. Solo lo que se añade a style.css:
+   menu.sh junta los dos ficheros cuando el escritorio activo tiene ventanas.
+   La imagen la genera make-panel.sh. wofi carga el CSS como texto, sin carpeta
+   de referencia, así que la ruta de la imagen tiene que ser completa. */
+
+#outer-box {
+    padding-left: 234px; /* 220 de imagen + 14 de separación: igual que PANEL_WIDTH en lib.sh */
+    background-image: url("{{ .chezmoi.homeDir }}/.config/wofi/panel.png");
+    background-repeat: no-repeat;
+    background-position: left 19%; /* la cara queda centrada también en los menús cortos */
+    background-size: 220px auto;
+}
