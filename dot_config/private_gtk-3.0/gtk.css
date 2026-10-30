@@ -33,3 +33,8 @@ entry {
 button:hover, row:hover {
     background-color: alpha(#6f9f98, 0.35);
 }
+
+/* wofi trae su propio estilo: su ventana queda transparente para que se vean las esquinas redondeadas */
+#window, #window.background {
+    background-color: transparent;
+}
