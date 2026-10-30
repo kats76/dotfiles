@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Única forma de abrir wofi: el lanzador (Super + Space) y los menús de waybar pasan por aquí.
+# Única forma de abrir wofi: el lanzador (Super + Space) pasa por aquí.
+# Los menús de waybar son paneles propios (waybar/scripts/panel.py).
 # Uso: menu.sh [opciones de wofi]
 # - Un solo menú a la vez (menu_lock en lib.sh).
 # - Con ventanas en el escritorio activo, añade el panel de la ilustración (style.css + style-panel.css).

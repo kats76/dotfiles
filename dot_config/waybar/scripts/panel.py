@@ -1,4 +1,4 @@
-"""Base común de los paneles de waybar (volumen, Wi-Fi y Bluetooth).
+"""Base común de los paneles de waybar (volumen, Wi-Fi, Bluetooth y batería).
 
 Cada panel hereda de Panel y solo rellena su contenido. Esta base se encarga de:
 - Salir bajo el botón pulsado, en el monitor con el foco, con un ancho que cabe en él.
@@ -241,8 +241,8 @@ def single_instance(name):
     return fd  # el candado dura mientras el descriptor siga abierto
 
 
-def main(panel_class, name):
-    """Arranca un panel: candado, estilo y bucle de GTK."""
+def main(panel_class, name, extra_css=b""):
+    """Arranca un panel: candado, estilo (CSS común más el propio del panel) y bucle de GTK."""
     _lock = single_instance(name)  # noqa: F841 (el candado vive mientras el proceso)
     # Otro clic manda SIGTERM: se cierra desde el bucle de GTK
     try:
@@ -254,7 +254,7 @@ def main(panel_class, name):
         GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGTERM, Gtk.main_quit)
 
     provider = Gtk.CssProvider()
-    provider.load_from_data(CSS)
+    provider.load_from_data(CSS + extra_css)
     # Por encima de gtk-3.0/gtk.css (prioridad USER), que pinta el fondo de todas las ventanas
     Gtk.StyleContext.add_provider_for_screen(
         Gdk.Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_USER + 1)

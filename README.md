@@ -131,14 +131,14 @@ Media, volume and brightness keys work too, even on the lock screen.
 
 **What is configured:** workspaces on the left, the active window title in the center, and on the right volume, brightness, Wi-Fi, Bluetooth, CPU, memory, battery, clock and tray.
 
-Four modules open something with a click (scripts in `waybar/scripts/`). Volume, Wi-Fi and Bluetooth are small panels that come out of their button, with the palette, and fit any monitor (also the vertical one):
+Four modules open a small panel with a click (scripts in `waybar/scripts/`). The panels come out of their button, use the palette and fit any monitor (also the vertical one):
 
 - **Volume** (`sound-panel.py`): volume slider, mute button and the audio outputs (speakers, the monitor over HDMI, Bluetooth headphones). Picking an output moves what is already playing to it. HDMI outputs without a screen are hidden. The mouse wheel over the icon still changes the volume.
 - **Wi-Fi** (`wifi-panel.py`): opens instantly with the networks the system already knows and scans in the background. Switch to turn Wi-Fi on and off, the connected network on top with a Disconnect button, and the password of a new network is typed inside the panel.
 - **Bluetooth** (`bluetooth-panel.py`): power switch, paired devices with their battery, connect or disconnect with a click, and pair a new one with blueman. In the bar the module only shows the icon and the headphones battery, so it fits on narrow monitors; the name is in the tooltip.
-- **Battery** (`power-menu.sh`, wofi): the three power-profiles-daemon modes (performance, balanced, power saver) with the current one marked.
+- **Battery** (`battery-panel.py`): percentage and charge bar (red below 20 %), the state in words (charging with the time until full, on battery with the time left, or plugged in and stopped by the charge limit), the three power-profiles-daemon modes as buttons, and at the bottom the charge limit, health and cycles. It updates itself while open.
 
-The three panels share `waybar/scripts/panel.py`: position under the button, size, colors, closing (`Esc`, moving the mouse away or another click on the same button) and only one panel at a time; clicking another button switches panels. They are Python with GTK 3 and gtk-layer-shell. Every action shows a mako notification when something fails. Each module is a rounded box with a thin `gray` border; the active workspace is `accent` and an urgent one is `red`.
+The four panels share `waybar/scripts/panel.py`: position under the button, size, colors, closing (`Esc`, moving the mouse away or another click on the same button) and only one panel at a time; clicking another button switches panels. They are Python with GTK 3 and gtk-layer-shell. Every action shows a mako notification when something fails. Each module is a rounded box with a thin `gray` border; the active workspace is `accent` and an urgent one is `red`.
 
 **Change for your machine:** three modules point to my hardware.
 
@@ -185,9 +185,9 @@ Run it again after updating `sddm-silent-theme` or changing the wallpaper. `Xset
 
 `Super + Space`. `wofi/config` sets the size (560×420), the position (center) and the terminal for terminal apps; `wofi/style.css` uses the palette, with the selected entry in `accent`.
 
-The launcher and the waybar menus always open through `wofi/menu.sh`:
+The launcher always opens through `wofi/menu.sh`:
 
-- **One menu at a time.** A lock (`flock`, in `wofi/lib.sh`) ignores extra clicks while a menu is open or still loading.
+- **One launcher at a time.** A lock (`flock`, in `wofi/lib.sh`) ignores extra presses while it is open.
 - **Illustration panel.** When the active workspace has windows, a crop of the wallpaper appears on the left (`wofi/style-panel.css`, added on top of `style.css`). On an empty workspace the wallpaper is already visible, so the menu opens without it.
 
 **Change the panel image:** edit `SOURCE` (the image) and `CROP` (the area, `WIDTHxHEIGHT+X+Y`; empty for an automatic center crop) at the top of `wofi/make-panel.sh`, then run it:
@@ -196,7 +196,7 @@ The launcher and the waybar menus always open through `wofi/menu.sh`:
 ~/.config/wofi/make-panel.sh
 ```
 
-It writes `~/.config/wofi/panel.png`, which is not in the repo (like the wallpaper). Without the source image, the menus simply open without the panel.
+It writes `~/.config/wofi/panel.png`, which is not in the repo (like the wallpaper). Without the source image, the launcher simply opens without the panel.
 
 ## Image viewer (swayimg)
 

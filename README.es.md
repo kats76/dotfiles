@@ -131,14 +131,14 @@ Las teclas de medios, volumen y brillo también funcionan, incluso con la sesió
 
 **Qué está configurado:** los escritorios a la izquierda, el título de la ventana activa en el centro y, a la derecha, volumen, brillo, Wi-Fi, Bluetooth, CPU, memoria, batería, reloj y bandeja.
 
-Cuatro módulos abren algo con un clic (scripts en `waybar/scripts/`). Volumen, Wi-Fi y Bluetooth son paneles pequeños que salen de su botón, con la paleta, y caben en cualquier monitor (también en el vertical):
+Cuatro módulos abren un panel pequeño con un clic (scripts en `waybar/scripts/`). Los paneles salen de su botón, usan la paleta y caben en cualquier monitor (también en el vertical):
 
 - **Volumen** (`sound-panel.py`): barra de volumen, botón de silencio y las salidas de audio (altavoces, el monitor por HDMI, cascos Bluetooth). Al elegir una salida, lo que ya suena pasa a ella. Las salidas HDMI sin pantalla no se muestran. La rueda del ratón sobre el icono sigue cambiando el volumen.
 - **Wi-Fi** (`wifi-panel.py`): se abre al instante con las redes que el sistema ya conoce y escanea en segundo plano. Interruptor para encender y apagar el Wi-Fi, la red conectada arriba con un botón para desconectar, y la contraseña de una red nueva se escribe dentro del panel.
 - **Bluetooth** (`bluetooth-panel.py`): interruptor de encendido, dispositivos emparejados con su batería, conectar o desconectar con un clic, y emparejar uno nuevo con blueman. En la barra, el módulo solo muestra el icono y la batería de los cascos, para que quepa en monitores estrechos; el nombre está en el tooltip.
-- **Batería** (`power-menu.sh`, wofi): los tres modos de power-profiles-daemon (rendimiento, equilibrado, ahorro) con el actual marcado.
+- **Batería** (`battery-panel.py`): porcentaje y barra de carga (roja por debajo del 20 %), el estado en palabras (cargando con el tiempo hasta lleno, con batería y el tiempo restante, o enchufada y parada por el límite de carga), los tres modos de power-profiles-daemon como botones y, al pie, el límite de carga, la salud y los ciclos. Se actualiza solo mientras está abierto.
 
-Los tres paneles comparten `waybar/scripts/panel.py`: posición bajo el botón, tamaño, colores, cierre (`Esc`, sacar el ratón u otro clic en el mismo botón) y un solo panel a la vez; un clic en otro botón cambia de panel. Son Python con GTK 3 y gtk-layer-shell. Si algo falla, avisa con mako. Cada módulo es una caja redondeada con un borde fino `gray`; el escritorio activo va en `accent` y uno urgente en `red`.
+Los cuatro paneles comparten `waybar/scripts/panel.py`: posición bajo el botón, tamaño, colores, cierre (`Esc`, sacar el ratón u otro clic en el mismo botón) y un solo panel a la vez; un clic en otro botón cambia de panel. Son Python con GTK 3 y gtk-layer-shell. Si algo falla, avisa con mako. Cada módulo es una caja redondeada con un borde fino `gray`; el escritorio activo va en `accent` y uno urgente en `red`.
 
 **Qué cambiar para tu equipo:** tres módulos apuntan a mi hardware.
 
@@ -185,9 +185,9 @@ Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. 
 
 `Super + Space`. `wofi/config` fija el tamaño (560×420), la posición (centro) y la terminal para las apps de terminal; `wofi/style.css` usa la paleta, con la entrada seleccionada en `accent`.
 
-El lanzador y los menús de waybar se abren siempre con `wofi/menu.sh`:
+El lanzador se abre siempre con `wofi/menu.sh`:
 
-- **Un menú a la vez.** Un candado (`flock`, en `wofi/lib.sh`) ignora los clics de más mientras hay un menú abierto o cargándose.
+- **Un lanzador a la vez.** Un candado (`flock`, en `wofi/lib.sh`) ignora las pulsaciones de más mientras está abierto.
 - **Panel con ilustración.** Si el escritorio activo tiene ventanas, aparece a la izquierda un recorte del wallpaper (`wofi/style-panel.css`, que se añade a `style.css`). En un escritorio vacío ya se ve el wallpaper, así que el menú se abre sin él.
 
 **Cambiar la imagen del panel:** edita `SOURCE` (la imagen) y `CROP` (la zona, `ANCHOxALTO+X+Y`; vacío para un recorte centrado automático) al principio de `wofi/make-panel.sh` y ejecútalo:
@@ -196,7 +196,7 @@ El lanzador y los menús de waybar se abren siempre con `wofi/menu.sh`:
 ~/.config/wofi/make-panel.sh
 ```
 
-Genera `~/.config/wofi/panel.png`, que no está en el repo (como el wallpaper). Sin la imagen de origen, los menús se abren sin panel.
+Genera `~/.config/wofi/panel.png`, que no está en el repo (como el wallpaper). Sin la imagen de origen, el lanzador se abre sin panel.
 
 ## Visor de imágenes (swayimg)
 
