@@ -123,7 +123,7 @@ chezmoi apply
 | `Print` | Screenshot of an area to the clipboard |
 | `Super + Print` | Screenshot of an area, saved to `~/Img/Screenshots` and copied |
 
-Media, volume and brightness keys work too, even on the lock screen. Screenshots use `hypr/scripts/screenshot.sh` (grim and slurp); `Esc` cancels the selection.
+Media, volume and brightness keys work too, even on the lock screen. Volume, microphone and brightness show an on-screen indicator at the bottom center (`waybar/scripts/osd.py`): icon, level bar and percentage, gone after 1.5 s. Holding the key updates the same indicator instead of opening new ones. Screenshots use `hypr/scripts/screenshot.sh` (grim and slurp); `Esc` cancels the selection.
 
 ## Waybar
 
