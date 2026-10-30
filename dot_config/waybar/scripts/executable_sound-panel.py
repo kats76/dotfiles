@@ -55,8 +55,12 @@ CSS = b"""
 LOCK = os.path.join(os.environ.get("XDG_RUNTIME_DIR", "/tmp"), "sound-panel.lock")
 
 
+# Salida en inglés fijo: pactl traduce sus respuestas ("Silencio: sí" en español)
+ENV = {**os.environ, "LC_ALL": "C"}
+
+
 def run(*cmd):
-    return subprocess.run(cmd, capture_output=True, text=True, check=False).stdout
+    return subprocess.run(cmd, capture_output=True, text=True, check=False, env=ENV).stdout
 
 
 def single_instance():
