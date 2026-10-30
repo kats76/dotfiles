@@ -242,11 +242,12 @@ Para añadir un plugin, crea un fichero en `lua/plugins/` que devuelva su especi
 
 - **Thunar** es el gestor de archivos (`Super + E`). Sigue la paleta gracias a `gtk-3.0/gtk.css`, que redefine los colores de Adwaita-dark: fondo `bg`, selección `accent` y hover `accent2`. El mismo fichero colorea todas las apps GTK3 (control de volumen, Bluetooth, diálogos).
 - **GTK 3/4** (`gtk-3.0/settings.ini`, `gtk-4.0/settings.ini`): Adwaita-dark, iconos breeze-dark, JetBrainsMono y modo oscuro preferido.
-- En Wayland, las apps GTK leen los iconos y la fuente de gsettings, no de `settings.ini`. Ejecútalo una vez en un equipo nuevo:
+- En Wayland, las apps GTK leen los iconos y la fuente de gsettings, no de `settings.ini`. La última línea deja solo el botón de cerrar en las apps que dibujan su propia barra de título, como Firefox: en un gestor de ventanas en mosaico, minimizar y maximizar no hacen nada. Ejecútalo una vez en un equipo nuevo:
 
   ```bash
   gsettings set org.gnome.desktop.interface icon-theme 'breeze-dark'
   gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono Nerd Font 10'
+  gsettings set org.gnome.desktop.wm.preferences button-layout ':close'
   ```
 
 - **Qt** (`qt6ct/qt6ct.conf`): estilo Fusion con el esquema de color `HyprPalette` de `~/.local/share/color-schemes/`. `hyprland.lua` fija `QT_QPA_PLATFORMTHEME=qt6ct` para que las apps Qt (como OBS) lo usen.
