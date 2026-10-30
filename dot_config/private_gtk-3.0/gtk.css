@@ -34,6 +34,48 @@ button:hover, row:hover {
     background-color: alpha(#6f9f98, 0.35);
 }
 
+/* Sin foco (:backdrop) Adwaita aclara la ventana: mismos colores que con foco */
+window:backdrop, .background:backdrop, headerbar:backdrop, .titlebar:backdrop, toolbar:backdrop,
+scrolledwindow:backdrop, treeview:backdrop, iconview:backdrop, .view:backdrop {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+}
+
+/* Barra de menús (Archivo, Editar, Ver…), con y sin foco */
+menubar, menubar:backdrop {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+}
+
+menubar > menuitem:hover {
+    background-color: #8a63c7;
+    color: #c7ced6;
+}
+
+/* Menús desplegables y de clic derecho */
+menu, .menu, .context-menu, menu:backdrop {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    border: 1px solid alpha(#a08f95, 0.35);
+}
+
+menu menuitem {
+    padding: 6px 10px;
+}
+
+menu menuitem:hover {
+    background-color: #8a63c7;
+    color: #c7ced6;
+}
+
+menu menuitem:disabled, menu menuitem:disabled label {
+    color: #a08f95;
+}
+
+menu separator {
+    background-color: alpha(#a08f95, 0.35);
+}
+
 /* wofi trae su propio estilo: su ventana queda transparente para que se vean las esquinas redondeadas */
 #window, #window.background {
     background-color: transparent;
