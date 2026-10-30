@@ -12,7 +12,7 @@ This README is also a guide: each component has a screenshot, what is configured
 
 - [Install](#install-arch-linux)
 - [Palette and fonts](#palette-and-fonts)
-- [Hyprland](#hyprland) · [Waybar](#waybar) · [Login screen](#login-screen-sddm) · [Logout menu](#logout-menu-wlogout) · [Lock screen](#lock-screen-and-idle) · [App launcher](#app-launcher-wofi) · [Image viewer](#image-viewer-swayimg) · [Terminal and shell](#terminal-and-shell) · [Neovim](#neovim) · [File manager and GTK](#file-manager-and-gtk)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Login screen](#login-screen-sddm) · [Logout menu](#logout-menu-wlogout) · [Lock screen](#lock-screen-and-idle) · [App launcher](#app-launcher-wofi) · [Image viewer](#image-viewer-swayimg) · [Terminal and shell](#terminal-and-shell) · [Neovim](#neovim) · [File manager and GTK](#file-manager-and-gtk) · [Firefox](#firefox)
 - [Workflow](#workflow) · [Never in the repo](#never-in-the-repo-) · [Other machines](#other-machines)
 
 ## What's inside
@@ -250,6 +250,19 @@ Add a plugin by creating a file in `lua/plugins/` that returns its spec.
   ```
 
 - **Qt** (`qt6ct/qt6ct.conf`): Fusion style with the `HyprPalette` color scheme from `~/.local/share/color-schemes/`. `hyprland.lua` sets `QT_QPA_PLATFORMTHEME=qt6ct` so Qt apps (like OBS) use it.
+
+## Firefox
+
+`firefox/hypr-palette/` is a Firefox theme with the palette: `bg` window, selected tab in `accent` like the active workspace in waybar, `fg` text, `accent2` hover, and menus and address bar to match. Private windows keep Firefox's own purple design, so they still stand out.
+
+Firefox only installs themes signed by Mozilla, so it has to be signed once (free, and as "unlisted" it does not appear in the store):
+
+1. Package it: `cd ~/.local/share/chezmoi/firefox/hypr-palette && bsdtar -a -cf ~/hypr-palette.zip manifest.json`
+2. **Preview (optional):** in `about:debugging#/runtime/this-firefox`, *Load Temporary Add-on…* and pick `manifest.json`. It goes away when Firefox closes.
+3. **Sign:** at [addons.mozilla.org/developers](https://addons.mozilla.org/developers/addon/submit/distribution), choose *On your own*, upload `hypr-palette.zip` and wait for the automatic review (a few minutes).
+4. **Install:** download the signed `.xpi` from the version page and open it with Firefox.
+
+To change a color, edit `manifest.json`, raise `version` and sign it again.
 
 ## Workflow
 

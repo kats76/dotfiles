@@ -66,6 +66,10 @@ jobs:
           sys.exit(failed)
           EOF
 
+      # Fuera del home renderizado: no lo cubre el paso anterior
+      - name: Firefox theme
+        run: python3 -m json.tool firefox/hypr-palette/manifest.json > /dev/null
+
       # Valida contra la API real de Hyprland (opciones y tipos), no solo la sintaxis.
       # Hyprland no arranca como root, así que corre con un usuario sin privilegios.
       - name: Hyprland config
