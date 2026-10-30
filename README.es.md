@@ -12,7 +12,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 
 - [Instalación](#instalación-arch-linux)
 - [Paleta y fuentes](#paleta-y-fuentes)
-- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Bloqueo](#bloqueo-e-inactividad) · [Lanzador](#lanzador-de-apps-wofi) · [Visor](#visor-de-imágenes-swayimg) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [Gestor de archivos y GTK](#gestor-de-archivos-y-gtk) · [Firefox](#firefox)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Bloqueo](#bloqueo-e-inactividad) · [Lanzador](#lanzador-de-apps-wofi) · [Visor](#visor-de-imágenes-swayimg) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [Gestor de archivos y GTK](#gestor-de-archivos-y-gtk) · [Firefox y Vimium](#firefox-y-vimium)
 - [Flujo de trabajo](#flujo-de-trabajo) · [Nunca va al repo](#nunca-va-al-repo-) · [Otras máquinas](#otras-máquinas)
 
 ## Qué hay aquí
@@ -252,18 +252,9 @@ Para añadir un plugin, crea un fichero en `lua/plugins/` que devuelva su especi
 
 - **Qt** (`qt6ct/qt6ct.conf`): estilo Fusion con el esquema de color `HyprPalette` de `~/.local/share/color-schemes/`. `hyprland.lua` fija `QT_QPA_PLATFORMTHEME=qt6ct` para que las apps Qt (como OBS) lo usen.
 
-## Firefox
+## Firefox y Vimium
 
-`firefox/hypr-palette/` es un tema de Firefox con la paleta: ventana en `bg`, pestaña activa en `accent` como el escritorio activo de waybar, texto `fg`, hover en `accent2`, y menús y barra de direcciones a juego. Las ventanas privadas mantienen el diseño morado propio de Firefox, así que se siguen distinguiendo.
-
-Firefox solo instala temas firmados por Mozilla, así que hay que firmarlo una vez (gratis, y como "no listado" no aparece en la tienda):
-
-1. Empaquetarlo: `cd ~/.local/share/chezmoi/firefox/hypr-palette && bsdtar -a -cf ~/hypr-palette.zip manifest.json`
-2. **Vista previa (opcional):** en `about:debugging#/runtime/this-firefox`, *Cargar complemento temporal…* y elegir `manifest.json`. Desaparece al cerrar Firefox.
-3. **Firmar:** en [addons.mozilla.org/developers](https://addons.mozilla.org/developers/addon/submit/distribution), elegir *En tu propio sitio* (*On your own*), subir `hypr-palette.zip` y esperar la revisión automática (unos minutos).
-4. **Instalar:** descargar el `.xpi` firmado desde la página de la versión y abrirlo con Firefox.
-
-Para cambiar un color, edita `manifest.json`, sube `version` y fírmalo de nuevo.
+El tema de Firefox y los estilos de Vimium con esta paleta están en su propio repo: [kats76/hypr-palette](https://github.com/kats76/hypr-palette). Las ventanas privadas mantienen el diseño morado propio de Firefox.
 
 ## Flujo de trabajo
 
