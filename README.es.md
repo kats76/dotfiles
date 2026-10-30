@@ -131,14 +131,14 @@ Las teclas de medios, volumen y brillo también funcionan, incluso con la sesió
 
 **Qué está configurado:** los escritorios a la izquierda, el título de la ventana activa en el centro y, a la derecha, volumen, brillo, Wi-Fi, Bluetooth, CPU, memoria, batería, reloj y bandeja.
 
-Cuatro módulos abren un menú con un clic (scripts en `waybar/scripts/`):
+Cuatro módulos abren algo con un clic (scripts en `waybar/scripts/`). Volumen, Wi-Fi y Bluetooth son paneles pequeños que salen de su botón, con la paleta, y caben en cualquier monitor (también en el vertical):
 
-- **Wi-Fi** (`wifi-menu.sh`): redes cercanas con su señal y candado, la conectada marcada. Las guardadas conectan directamente; las nuevas piden la contraseña. También enciende y apaga el Wi-Fi.
-- **Bluetooth** (`bluetooth-menu.sh`): dispositivos emparejados para conectar o desconectar, encender y apagar el Bluetooth, y emparejar uno nuevo con blueman. Con un dispositivo conectado, el módulo muestra su nombre y su batería.
-- **Batería** (`power-menu.sh`): los tres modos de power-profiles-daemon (rendimiento, equilibrado, ahorro) con el actual marcado.
-- **Volumen** (`sound-panel.py`): un panel pequeño justo bajo el icono, con barra de volumen, botón de silencio y las salidas de audio (altavoces, el monitor por HDMI, cascos Bluetooth). Al elegir una salida, lo que ya suena pasa a ella. Las salidas HDMI sin pantalla no se muestran. Se cierra con `Esc`, al sacar el ratón o con otro clic en el icono. La rueda del ratón sobre el icono sigue cambiando el volumen. Es Python con GTK 3 y gtk-layer-shell; los colores están al principio del script.
+- **Volumen** (`sound-panel.py`): barra de volumen, botón de silencio y las salidas de audio (altavoces, el monitor por HDMI, cascos Bluetooth). Al elegir una salida, lo que ya suena pasa a ella. Las salidas HDMI sin pantalla no se muestran. La rueda del ratón sobre el icono sigue cambiando el volumen.
+- **Wi-Fi** (`wifi-panel.py`): se abre al instante con las redes que el sistema ya conoce y escanea en segundo plano. Interruptor para encender y apagar el Wi-Fi, la red conectada arriba con un botón para desconectar, y la contraseña de una red nueva se escribe dentro del panel.
+- **Bluetooth** (`bluetooth-panel.py`): interruptor de encendido, dispositivos emparejados con su batería, conectar o desconectar con un clic, y emparejar uno nuevo con blueman. En la barra, el módulo solo muestra el icono y la batería de los cascos, para que quepa en monitores estrechos; el nombre está en el tooltip.
+- **Batería** (`power-menu.sh`, wofi): los tres modos de power-profiles-daemon (rendimiento, equilibrado, ahorro) con el actual marcado.
 
-Cada acción avisa con una notificación de mako. Cada módulo es una caja redondeada con un borde fino `gray`; el escritorio activo va en `accent` y uno urgente en `red`.
+Los tres paneles comparten `waybar/scripts/panel.py`: posición bajo el botón, tamaño, colores, cierre (`Esc`, sacar el ratón u otro clic en el mismo botón) y un solo panel a la vez; un clic en otro botón cambia de panel. Son Python con GTK 3 y gtk-layer-shell. Si algo falla, avisa con mako. Cada módulo es una caja redondeada con un borde fino `gray`; el escritorio activo va en `accent` y uno urgente en `red`.
 
 **Qué cambiar para tu equipo:** tres módulos apuntan a mi hardware.
 
