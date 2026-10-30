@@ -39,7 +39,7 @@ Do a full `sudo pacman -Syu` first: installing a Qt package on a partially upgra
 sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
-yay -S wlogout sddm-silent-theme python-pywal
+yay -S wlogout sddm-silent-theme
 chezmoi init kats76
 chezmoi diff        # review what would change
 chezmoi apply
@@ -49,7 +49,7 @@ Home paths are templates (`{{ .chezmoi.homeDir }}`), so another username works. 
 
 ### Wallpaper
 
-The wallpaper is not in this repo. Download it from [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) to `~/Img/wallhaven-9oo8k1.jpg`, or use your own and change the path in three places: `hypr/hyprpaper.conf`, the `wal -i` line in `hypr/hyprland.lua` and `WALLPAPER` in `sddm-silent/install.sh`.
+The wallpaper is not in this repo. Download it from [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) to `~/Img/wallhaven-9oo8k1.jpg`, or use your own and change the path in three places: `hypr/hyprpaper.conf`, `hypr/hyprlock.conf` and `WALLPAPER` in `sddm-silent/install.sh`.
 
 ## Palette and fonts
 
@@ -90,7 +90,7 @@ chezmoi apply
 
 - `dwindle` layout, gaps of 5 px between windows and 20 px to the screen edge, 2 px borders with an `accent` → `accent2` gradient and rounded corners (10 px).
 - Blur behind waybar.
-- Autostart: hyprpaper, waybar, pywal with the wallpaper and the lid script.
+- Autostart: hyprpaper, waybar, mako, hypridle, the polkit agent and the lid script.
 - Lid: `scripts/lid.sh` turns the laptop panel off when the lid is closed and an external monitor is connected.
 
 **Change for your machine**

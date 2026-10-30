@@ -39,7 +39,7 @@ Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el siste
 sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard
-yay -S wlogout sddm-silent-theme python-pywal
+yay -S wlogout sddm-silent-theme
 chezmoi init kats76
 chezmoi diff        # revisar qué cambiaría
 chezmoi apply
@@ -49,7 +49,7 @@ Las rutas del home son plantillas (`{{ .chezmoi.homeDir }}`), así que funciona 
 
 ### Wallpaper
 
-El wallpaper no está en el repo. Descárgalo de [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) en `~/Img/wallhaven-9oo8k1.jpg`, o usa el tuyo y cambia la ruta en tres sitios: `hypr/hyprpaper.conf`, la línea `wal -i` de `hypr/hyprland.lua` y `WALLPAPER` en `sddm-silent/install.sh`.
+El wallpaper no está en el repo. Descárgalo de [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) en `~/Img/wallhaven-9oo8k1.jpg`, o usa el tuyo y cambia la ruta en tres sitios: `hypr/hyprpaper.conf`, `hypr/hyprlock.conf` y `WALLPAPER` en `sddm-silent/install.sh`.
 
 ## Paleta y fuentes
 
@@ -90,7 +90,7 @@ chezmoi apply
 
 - Distribución `dwindle`, huecos de 5 px entre ventanas y de 20 px con el borde de la pantalla, bordes de 2 px con un degradado `accent` → `accent2` y esquinas redondeadas (10 px).
 - Desenfoque detrás de waybar.
-- Autoarranque: hyprpaper, waybar, pywal con el wallpaper y el script de la tapa.
+- Autoarranque: hyprpaper, waybar, mako, hypridle, el agente de polkit y el script de la tapa.
 - Tapa: `scripts/lid.sh` apaga la pantalla del portátil con la tapa cerrada si hay un monitor externo conectado.
 
 **Qué cambiar para tu equipo**
