@@ -38,7 +38,7 @@ Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el siste
 ```bash
 sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
-  zsh-autosuggestions sddm qt6-virtualkeyboard
+  zsh-autosuggestions sddm qt6-virtualkeyboard network-manager-applet blueman
 yay -S wlogout sddm-silent-theme python-pywal
 chezmoi init kats76
 chezmoi diff        # revisar qué cambiaría
@@ -139,7 +139,7 @@ Las teclas de medios, volumen y brillo también funcionan, incluso con la sesió
 | `backlight` | `device` | `intel_backlight` | `ls /sys/class/backlight` |
 | `battery` | `battery` / `adapter` | `BAT0` / `AC0` | `ls /sys/class/power_supply` |
 
-En un PC de sobremesa sin batería ni brillo, quita esos módulos de `modules-right`. Para recargar: `pkill -SIGUSR2 waybar`.
+La bandeja muestra `nm-applet` (Wi-Fi) y `blueman-applet` (Bluetooth), que arranca Hyprland: clic para conectarte. En un PC de sobremesa sin batería ni brillo, quita esos módulos de `modules-right`. Para recargar: `pkill -SIGUSR2 waybar`.
 
 ## Pantalla de login (SDDM)
 

@@ -38,7 +38,7 @@ Do a full `sudo pacman -Syu` first: installing a Qt package on a partially upgra
 ```bash
 sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
-  zsh-autosuggestions sddm qt6-virtualkeyboard
+  zsh-autosuggestions sddm qt6-virtualkeyboard network-manager-applet blueman
 yay -S wlogout sddm-silent-theme python-pywal
 chezmoi init kats76
 chezmoi diff        # review what would change
@@ -139,7 +139,7 @@ Media, volume and brightness keys work too, even on the lock screen.
 | `backlight` | `device` | `intel_backlight` | `ls /sys/class/backlight` |
 | `battery` | `battery` / `adapter` | `BAT0` / `AC0` | `ls /sys/class/power_supply` |
 
-On a desktop PC without a battery or backlight, remove those modules from `modules-right`. Reload with `pkill -SIGUSR2 waybar`.
+The tray shows `nm-applet` (Wi-Fi) and `blueman-applet` (Bluetooth), started by Hyprland: click them to connect. On a desktop PC without a battery or backlight, remove those modules from `modules-right`. Reload with `pkill -SIGUSR2 waybar`.
 
 ## Login screen (SDDM)
 
