@@ -38,7 +38,7 @@ Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el siste
 ```bash
 sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
-  zsh-autosuggestions sddm qt6-virtualkeyboard
+  zsh-autosuggestions sddm qt6-virtualkeyboard blueman power-profiles-daemon
 yay -S wlogout sddm-silent-theme
 chezmoi init kats76
 chezmoi diff        # revisar qué cambiaría
@@ -129,7 +129,15 @@ Las teclas de medios, volumen y brillo también funcionan, incluso con la sesió
 
 `waybar/config.jsonc` y `waybar/style.css`.
 
-**Qué está configurado:** los escritorios a la izquierda, el título de la ventana activa en el centro y, a la derecha, volumen, brillo, Wi-Fi, CPU, memoria, batería, reloj y bandeja. Cada módulo es una caja redondeada con un borde fino `gray`; el escritorio activo va en `accent` y uno urgente en `red`.
+**Qué está configurado:** los escritorios a la izquierda, el título de la ventana activa en el centro y, a la derecha, volumen, brillo, Wi-Fi, Bluetooth, CPU, memoria, batería, reloj y bandeja.
+
+Tres módulos abren un menú de wofi con un clic (scripts en `waybar/scripts/`):
+
+- **Wi-Fi** (`wifi-menu.sh`): redes cercanas con su señal y candado, la conectada marcada. Las guardadas conectan directamente; las nuevas piden la contraseña. También enciende y apaga el Wi-Fi.
+- **Bluetooth** (`bluetooth-menu.sh`): dispositivos emparejados para conectar o desconectar, encender y apagar el Bluetooth, y emparejar uno nuevo con blueman. Con un dispositivo conectado, el módulo muestra su nombre y su batería.
+- **Batería** (`power-menu.sh`): los tres modos de power-profiles-daemon (rendimiento, equilibrado, ahorro) con el actual marcado.
+
+Cada acción avisa con una notificación de mako. Cada módulo es una caja redondeada con un borde fino `gray`; el escritorio activo va en `accent` y uno urgente en `red`.
 
 **Qué cambiar para tu equipo:** tres módulos apuntan a mi hardware.
 

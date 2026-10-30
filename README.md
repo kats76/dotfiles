@@ -38,7 +38,7 @@ Do a full `sudo pacman -Syu` first: installing a Qt package on a partially upgra
 ```bash
 sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
-  zsh-autosuggestions sddm qt6-virtualkeyboard
+  zsh-autosuggestions sddm qt6-virtualkeyboard blueman power-profiles-daemon
 yay -S wlogout sddm-silent-theme
 chezmoi init kats76
 chezmoi diff        # review what would change
@@ -129,7 +129,15 @@ Media, volume and brightness keys work too, even on the lock screen.
 
 `waybar/config.jsonc` and `waybar/style.css`.
 
-**What is configured:** workspaces on the left, the active window title in the center, and on the right volume, brightness, Wi-Fi, CPU, memory, battery, clock and tray. Each module is a rounded box with a thin `gray` border; the active workspace is `accent` and an urgent one is `red`.
+**What is configured:** workspaces on the left, the active window title in the center, and on the right volume, brightness, Wi-Fi, Bluetooth, CPU, memory, battery, clock and tray.
+
+Three modules open a wofi menu with a click (scripts in `waybar/scripts/`):
+
+- **Wi-Fi** (`wifi-menu.sh`): nearby networks with signal and lock, the connected one marked. Saved networks connect directly; new ones ask for the password. Also turns Wi-Fi on and off.
+- **Bluetooth** (`bluetooth-menu.sh`): paired devices to connect or disconnect, turn Bluetooth on and off, and pair a new device with blueman. When connected, the module shows the device name and its battery.
+- **Battery** (`power-menu.sh`): the three power-profiles-daemon modes (performance, balanced, power saver) with the current one marked.
+
+Every action shows a mako notification. Each module is a rounded box with a thin `gray` border; the active workspace is `accent` and an urgent one is `red`.
 
 **Change for your machine:** three modules point to my hardware.
 

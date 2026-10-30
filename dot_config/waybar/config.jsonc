@@ -15,6 +15,7 @@
     "pulseaudio",
     "backlight",
     "network",
+    "bluetooth",
     "cpu",
     "memory",
     "battery",
@@ -33,7 +34,22 @@
   "network": {
     "interface": "wlan0",
     "format-wifi": " {signalStrength}%",
-    "format-disconnected": "󰤭"
+    "format-disconnected": "󰤭",
+    "tooltip-format-wifi": "{essid}\nClic: redes Wi-Fi",
+    "tooltip-format-disconnected": "Sin conexión\nClic: redes Wi-Fi",
+    "on-click": "~/.config/waybar/scripts/wifi-menu.sh"
+  },
+
+  "bluetooth": {
+    "format": "󰂯",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱 {device_alias}",
+    "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+    "tooltip-format": "Bluetooth\nClic: dispositivos",
+    "tooltip-format-connected": "{device_enumerate}\nClic: dispositivos",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "on-click": "~/.config/waybar/scripts/bluetooth-menu.sh"
   },
 
   "pulseaudio": {
@@ -51,6 +67,8 @@
   "battery": {
     "battery": "BAT0",
     "adapter": "AC0",
+    "tooltip-format": "{timeTo}\nClic: modo de energía",
+    "on-click": "~/.config/waybar/scripts/power-menu.sh",
     "format": "{capacity}% {icon}",
     "format-icons": ["","","","",""]
   },
