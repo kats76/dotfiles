@@ -49,7 +49,7 @@ Las rutas del home son plantillas (`{{ .chezmoi.homeDir }}`), así que funciona 
 
 ### Wallpaper
 
-El wallpaper no está en el repo. Descárgalo de [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) en `~/Img/wallhaven-9oo8k1.jpg`, o usa el tuyo y cambia la ruta en tres sitios: `hypr/hyprpaper.conf`, `hypr/hyprlock.conf` y `WALLPAPER` en `sddm-silent/install.sh`.
+El wallpaper no está en el repo. Descárgalo de [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) en `~/Img/wallhaven-9oo8k1.jpg`, o usa el tuyo y cambia la ruta en cuatro sitios: `hypr/hyprpaper.conf`, `hypr/hyprlock.conf`, `WALLPAPER` en `sddm-silent/install.sh` y `SOURCE` en `wofi/make-panel.sh`.
 
 ## Paleta y fuentes
 
@@ -183,6 +183,19 @@ Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. 
 ![Lanzador de apps](docs/img/wofi.webp)
 
 `Super + Space`. `wofi/config` fija el tamaño (560×420), la posición (centro) y la terminal para las apps de terminal; `wofi/style.css` usa la paleta, con la entrada seleccionada en `accent`.
+
+El lanzador y los menús de waybar se abren siempre con `wofi/menu.sh`:
+
+- **Un menú a la vez.** Un candado (`flock`, en `wofi/lib.sh`) ignora los clics de más mientras hay un menú abierto o cargándose.
+- **Panel con ilustración.** Si el escritorio activo tiene ventanas, aparece a la izquierda un recorte del wallpaper (`wofi/style-panel.css`, que se añade a `style.css`). En un escritorio vacío ya se ve el wallpaper, así que el menú se abre sin él.
+
+**Cambiar la imagen del panel:** edita `SOURCE` (la imagen) y `CROP` (la zona, `ANCHOxALTO+X+Y`; vacío para un recorte centrado automático) al principio de `wofi/make-panel.sh` y ejecútalo:
+
+```bash
+~/.config/wofi/make-panel.sh
+```
+
+Genera `~/.config/wofi/panel.png`, que no está en el repo (como el wallpaper). Sin la imagen de origen, los menús se abren sin panel.
 
 ## Visor de imágenes (swayimg)
 

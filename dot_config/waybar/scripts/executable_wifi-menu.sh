@@ -2,8 +2,12 @@
 # Menú de Wi-Fi (clic en el módulo network): lista las redes, conecta y enciende o apaga el Wi-Fi
 set -u
 
+# shellcheck source=/dev/null
+. "${XDG_CONFIG_HOME:-$HOME/.config}/wofi/lib.sh"
+menu_lock
+
 menu() {
-    wofi --dmenu --insensitive --cache-file /dev/null --prompt "$1" --width 480 --lines "${2:-10}"
+    "$WOFI_DIR/menu.sh" --dmenu --insensitive --cache-file /dev/null --prompt "$1" --width 480 --lines "${2:-10}"
 }
 
 if [ "$(nmcli -t -f WIFI radio)" != "enabled" ]; then
@@ -59,7 +63,7 @@ esac
 if nmcli -t -f NAME connection show | grep -qxF "$ssid"; then
     out=$(nmcli connection up id "$ssid" 2>&1); rc=$?
 elif printf '%s' "$choice" | grep -q '󰌾'; then
-    pass=$(wofi --dmenu --password --cache-file /dev/null --prompt "Contraseña de $ssid" --width 480 --lines 1 < /dev/null) || exit 0
+    pass=$("$WOFI_DIR/menu.sh" --dmenu --password --cache-file /dev/null --prompt "Contraseña de $ssid" --width 480 --lines 1 < /dev/null) || exit 0
     [ -z "$pass" ] && exit 0
     out=$(nmcli device wifi connect "$ssid" password "$pass" 2>&1); rc=$?
 else

@@ -1,0 +1,35 @@
+#!/bin/sh
+# Genera panel.png, la ilustración del panel izquierdo de los menús de wofi.
+# Para cambiar la imagen: edita SOURCE y CROP y vuelve a ejecutar este script.
+# menu.sh lo ejecuta solo si panel.png no existe.
+set -eu
+
+# Imagen de origen (por defecto, el wallpaper)
+SOURCE="${PANEL_SOURCE:-$HOME/Img/wallhaven-9oo8k1.jpg}"
+
+# Zona de SOURCE en píxeles, ANCHOxALTO+X+Y (con el wallpaper: la chica de la cabeza al cojín).
+# Vacío: recorte centrado automático.
+CROP="${PANEL_CROP-900x2070+1575+150}"
+
+# Tamaño del panel (el ancho coincide con background-size en style-panel.css)
+WIDTH=220
+HEIGHT=506
+
+# Degradado del borde derecho hacia el fondo de los menús (bg: #1e1e2e)
+FADE=70
+BG="30,30,46"
+
+out="$(dirname "$0")/panel.png"
+[ -f "$SOURCE" ] || { echo "No existe la imagen de origen: $SOURCE" >&2; exit 1; }
+
+if [ -n "$CROP" ]; then
+    set -- -crop "$CROP" +repage
+else
+    set --
+fi
+
+magick "$SOURCE" "$@" -resize "${WIDTH}x${HEIGHT}^" -gravity center -extent "${WIDTH}x${HEIGHT}" \
+    \( -size "${HEIGHT}x${FADE}" "gradient:rgba($BG,0)-rgba($BG,1)" -rotate -90 \) \
+    -gravity east -composite "$out"
+
+echo "$out"

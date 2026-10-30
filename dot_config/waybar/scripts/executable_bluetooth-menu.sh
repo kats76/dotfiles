@@ -2,8 +2,12 @@
 # Menú de Bluetooth (clic en el módulo bluetooth): conecta o desconecta los dispositivos emparejados
 set -u
 
+# shellcheck source=/dev/null
+. "${XDG_CONFIG_HOME:-$HOME/.config}/wofi/lib.sh"
+menu_lock
+
 menu() {
-    wofi --dmenu --insensitive --cache-file /dev/null --prompt "$1" --width 480 --lines "${2:-8}"
+    "$WOFI_DIR/menu.sh" --dmenu --insensitive --cache-file /dev/null --prompt "$1" --width 480 --lines "${2:-8}"
 }
 
 if [ "$(bluetoothctl show | awk '/Powered:/ { print $2 }')" != "yes" ]; then
@@ -31,7 +35,8 @@ choice=$({ cut -f1 "$tmp/list"; printf '󰂳  Emparejar un dispositivo nuevo\n�
 
 case "$choice" in
     "󰂳  Emparejar un dispositivo nuevo")
-        setsid -f blueman-manager > /dev/null 2>&1
+        # 9>&-: blueman no hereda el candado; si no, ningún menú se abriría mientras siga abierto
+        setsid -f blueman-manager > /dev/null 2>&1 9>&-
         exit 0
         ;;
     "󰂲  Apagar Bluetooth")

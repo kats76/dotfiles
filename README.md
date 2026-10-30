@@ -49,7 +49,7 @@ Home paths are templates (`{{ .chezmoi.homeDir }}`), so another username works. 
 
 ### Wallpaper
 
-The wallpaper is not in this repo. Download it from [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) to `~/Img/wallhaven-9oo8k1.jpg`, or use your own and change the path in three places: `hypr/hyprpaper.conf`, `hypr/hyprlock.conf` and `WALLPAPER` in `sddm-silent/install.sh`.
+The wallpaper is not in this repo. Download it from [wallhaven 9oo8k1](https://wallhaven.cc/w/9oo8k1) to `~/Img/wallhaven-9oo8k1.jpg`, or use your own and change the path in four places: `hypr/hyprpaper.conf`, `hypr/hyprlock.conf`, `WALLPAPER` in `sddm-silent/install.sh` and `SOURCE` in `wofi/make-panel.sh`.
 
 ## Palette and fonts
 
@@ -183,6 +183,19 @@ Run it again after updating `sddm-silent-theme` or changing the wallpaper. `Xset
 ![App launcher](docs/img/wofi.webp)
 
 `Super + Space`. `wofi/config` sets the size (560×420), the position (center) and the terminal for terminal apps; `wofi/style.css` uses the palette, with the selected entry in `accent`.
+
+The launcher and the waybar menus always open through `wofi/menu.sh`:
+
+- **One menu at a time.** A lock (`flock`, in `wofi/lib.sh`) ignores extra clicks while a menu is open or still loading.
+- **Illustration panel.** When the active workspace has windows, a crop of the wallpaper appears on the left (`wofi/style-panel.css`, added on top of `style.css`). On an empty workspace the wallpaper is already visible, so the menu opens without it.
+
+**Change the panel image:** edit `SOURCE` (the image) and `CROP` (the area, `WIDTHxHEIGHT+X+Y`; empty for an automatic center crop) at the top of `wofi/make-panel.sh`, then run it:
+
+```bash
+~/.config/wofi/make-panel.sh
+```
+
+It writes `~/.config/wofi/panel.png`, which is not in the repo (like the wallpaper). Without the source image, the menus simply open without the panel.
 
 ## Image viewer (swayimg)
 
