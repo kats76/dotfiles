@@ -11,15 +11,27 @@ dir="${SCREENSHOT_DIR:-$HOME/Img/Screenshots}"
 # Recuadro de selección con la paleta: fondo bg oscurecido, borde y relleno en accent
 geom=$(slurp -b 1e1e2e66 -c 8a63c7ff -s 8a63c722 -w 2) || exit 0
 
+# Captura a un archivo y comprueba que salió bien antes de tocar el portapapeles
+capture() {
+    if ! grim -g "$geom" "$1"; then
+        rm -f "$1"  # sin archivos vacíos o a medias
+        notify-send -u critical -a Captura "No se pudo hacer la captura"
+        exit 1
+    fi
+}
+
 case "$mode" in
     clip)
-        grim -g "$geom" - | wl-copy --type image/png
+        tmp=$(mktemp --suffix=.png)
+        trap 'rm -f "$tmp"' EXIT
+        capture "$tmp"
+        wl-copy --type image/png < "$tmp"
         notify-send -a Captura "Captura copiada al portapapeles"
         ;;
     save)
         mkdir -p "$dir"
         file="$dir/$(date +%Y-%m-%d_%H-%M-%S).png"
-        grim -g "$geom" "$file"
+        capture "$file"
         wl-copy --type image/png < "$file"
         notify-send -a Captura -i "$file" "Captura guardada" "$(basename "$file") · también en el portapapeles"
         ;;
