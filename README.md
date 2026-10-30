@@ -242,11 +242,12 @@ Add a plugin by creating a file in `lua/plugins/` that returns its spec.
 
 - **Thunar** is the file manager (`Super + E`). It follows the palette through `gtk-3.0/gtk.css`, which redefines the Adwaita-dark colors: `bg` background, `accent` selection and `accent2` hover. The same file colors every GTK3 app (volume control, Bluetooth, dialogs).
 - **GTK 3/4** (`gtk-3.0/settings.ini`, `gtk-4.0/settings.ini`): Adwaita-dark, breeze-dark icons, JetBrainsMono and dark mode preferred.
-- On Wayland, GTK apps read the icons and the font from gsettings, not from `settings.ini`. Run this once on a new machine:
+- On Wayland, GTK apps read the icons and the font from gsettings, not from `settings.ini`. The last line leaves only the close button in apps that draw their own title bar, like Firefox: in a tiling window manager, minimize and maximize do nothing. Run this once on a new machine:
 
   ```bash
   gsettings set org.gnome.desktop.interface icon-theme 'breeze-dark'
   gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono Nerd Font 10'
+  gsettings set org.gnome.desktop.wm.preferences button-layout ':close'
   ```
 
 - **Qt** (`qt6ct/qt6ct.conf`): Fusion style with the `HyprPalette` color scheme from `~/.local/share/color-schemes/`. `hyprland.lua` sets `QT_QPA_PLATFORMTHEME=qt6ct` so Qt apps (like OBS) use it.
