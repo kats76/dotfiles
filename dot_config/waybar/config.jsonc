@@ -54,6 +54,8 @@
 
   "pulseaudio": {
     "format": "{icon} {volume}%",
+    "tooltip-format": "{desc}\nClic: volumen y salida · rueda: volumen",
+    "on-click": "~/.config/waybar/scripts/sound-panel.py",
     "format-icons": {
       "default": ["","",""]
     }

@@ -38,7 +38,7 @@ Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el siste
 ```bash
 sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
-  zsh-autosuggestions sddm qt6-virtualkeyboard blueman power-profiles-daemon
+  zsh-autosuggestions sddm qt6-virtualkeyboard blueman power-profiles-daemon python-gobject gtk-layer-shell
 yay -S wlogout sddm-silent-theme
 chezmoi init kats76
 chezmoi diff        # revisar qué cambiaría
@@ -131,11 +131,12 @@ Las teclas de medios, volumen y brillo también funcionan, incluso con la sesió
 
 **Qué está configurado:** los escritorios a la izquierda, el título de la ventana activa en el centro y, a la derecha, volumen, brillo, Wi-Fi, Bluetooth, CPU, memoria, batería, reloj y bandeja.
 
-Tres módulos abren un menú de wofi con un clic (scripts en `waybar/scripts/`):
+Cuatro módulos abren un menú con un clic (scripts en `waybar/scripts/`):
 
 - **Wi-Fi** (`wifi-menu.sh`): redes cercanas con su señal y candado, la conectada marcada. Las guardadas conectan directamente; las nuevas piden la contraseña. También enciende y apaga el Wi-Fi.
 - **Bluetooth** (`bluetooth-menu.sh`): dispositivos emparejados para conectar o desconectar, encender y apagar el Bluetooth, y emparejar uno nuevo con blueman. Con un dispositivo conectado, el módulo muestra su nombre y su batería.
 - **Batería** (`power-menu.sh`): los tres modos de power-profiles-daemon (rendimiento, equilibrado, ahorro) con el actual marcado.
+- **Volumen** (`sound-panel.py`): un panel pequeño justo bajo el icono, con barra de volumen, botón de silencio y las salidas de audio (altavoces, el monitor por HDMI, cascos Bluetooth). Al elegir una salida, lo que ya suena pasa a ella. Las salidas HDMI sin pantalla no se muestran. Se cierra con `Esc`, al sacar el ratón o con otro clic en el icono. La rueda del ratón sobre el icono sigue cambiando el volumen. Es Python con GTK 3 y gtk-layer-shell; los colores están al principio del script.
 
 Cada acción avisa con una notificación de mako. Cada módulo es una caja redondeada con un borde fino `gray`; el escritorio activo va en `accent` y uno urgente en `red`.
 
@@ -250,7 +251,7 @@ El mismo flujo que en mis otros repos: **`dev` es para probar y `main` es lo pub
 
 1. Cada cambio empieza como una [issue](../../issues) con una propuesta y criterios de aceptación.
 2. Una rama desde `dev` (`feat/…`, `fix/…`, `docs/…`, `ci/…`) y una pull request a `dev`. Conventional Commits y squash merge.
-3. El workflow **Check configs** renderiza el repo con chezmoi en un home vacío y lo valida: `Hyprland --verify-config`, sintaxis Lua, shellcheck y JSON. `dev` y `main` solo aceptan cambios con el check en verde.
+3. El workflow **Check configs** renderiza el repo con chezmoi en un home vacío y lo valida: `Hyprland --verify-config`, sintaxis Lua y Python, shellcheck y JSON. `dev` y `main` solo aceptan cambios con el check en verde.
 4. Una vez probado en la máquina real, `main` avanza hasta `dev` con fast-forward.
 
 ```bash

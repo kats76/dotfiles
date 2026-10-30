@@ -38,7 +38,7 @@ Do a full `sudo pacman -Syu` first: installing a Qt package on a partially upgra
 ```bash
 sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
-  zsh-autosuggestions sddm qt6-virtualkeyboard blueman power-profiles-daemon
+  zsh-autosuggestions sddm qt6-virtualkeyboard blueman power-profiles-daemon python-gobject gtk-layer-shell
 yay -S wlogout sddm-silent-theme
 chezmoi init kats76
 chezmoi diff        # review what would change
@@ -131,11 +131,12 @@ Media, volume and brightness keys work too, even on the lock screen.
 
 **What is configured:** workspaces on the left, the active window title in the center, and on the right volume, brightness, Wi-Fi, Bluetooth, CPU, memory, battery, clock and tray.
 
-Three modules open a wofi menu with a click (scripts in `waybar/scripts/`):
+Four modules open a menu with a click (scripts in `waybar/scripts/`):
 
 - **Wi-Fi** (`wifi-menu.sh`): nearby networks with signal and lock, the connected one marked. Saved networks connect directly; new ones ask for the password. Also turns Wi-Fi on and off.
 - **Bluetooth** (`bluetooth-menu.sh`): paired devices to connect or disconnect, turn Bluetooth on and off, and pair a new device with blueman. When connected, the module shows the device name and its battery.
 - **Battery** (`power-menu.sh`): the three power-profiles-daemon modes (performance, balanced, power saver) with the current one marked.
+- **Volume** (`sound-panel.py`): a small panel right under the icon, with a volume slider, a mute button and the audio outputs (speakers, the monitor over HDMI, Bluetooth headphones). Picking an output moves what is already playing to it. HDMI outputs without a screen are hidden. It closes with `Esc`, when the mouse leaves it or with another click on the icon. The mouse wheel over the icon still changes the volume. It is Python with GTK 3 and gtk-layer-shell; the colors are at the top of the script.
 
 Every action shows a mako notification. Each module is a rounded box with a thin `gray` border; the active workspace is `accent` and an urgent one is `red`.
 
@@ -250,7 +251,7 @@ Same flow as my other repos: **`dev` is for testing, `main` is what gets publish
 
 1. Every change starts as an [issue](../../issues) with a proposal and acceptance criteria.
 2. A branch off `dev` (`feat/…`, `fix/…`, `docs/…`, `ci/…`) and a pull request to `dev`. Conventional Commits, squash merge.
-3. The **Check configs** workflow renders the repo with chezmoi into an empty home and validates it: `Hyprland --verify-config`, Lua syntax, shellcheck and JSON. `dev` and `main` only accept changes with the check green.
+3. The **Check configs** workflow renders the repo with chezmoi into an empty home and validates it: `Hyprland --verify-config`, Lua and Python syntax, shellcheck and JSON. `dev` and `main` only accept changes with the check green.
 4. Once tested on the real machine, `main` is fast-forwarded to `dev`.
 
 ```bash
