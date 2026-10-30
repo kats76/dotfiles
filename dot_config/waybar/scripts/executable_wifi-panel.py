@@ -97,7 +97,15 @@ class WifiPanel(Panel):
     def scan(self):
         if self.switch.get_active():
             self.status.set_text("Redes · buscando…")
-            run_async(lambda: networks(rescan=True), self.show_networks)
+            run_async(lambda: networks(rescan=True), self.on_scan)
+
+    def on_scan(self, nets):
+        # Con una contraseña a medio escribir no se redibuja la lista (se perdería);
+        # al terminar de conectar se vuelve a leer y ya incluye lo escaneado
+        if self.typing:
+            self.status.set_text("Redes")
+        else:
+            self.show_networks(nets)
 
     def show_networks(self, nets):
         clear(self.list)
