@@ -45,7 +45,8 @@ case "$choice" in
         ;;
 esac
 
-line=$(awk -F'\t' -v c="$choice" '$1 == c { print; exit }' "$tmp/list")
+# La elección va por el entorno: awk -v interpretaría las '\' del nombre
+line=$(c="$choice" awk -F'\t' '$1 == ENVIRON["c"] { print; exit }' "$tmp/list")
 [ -z "$line" ] && exit 0
 mac=$(printf '%s' "$line" | cut -f2)
 action=$(printf '%s' "$line" | cut -f3)

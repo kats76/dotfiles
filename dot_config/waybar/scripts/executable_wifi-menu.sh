@@ -25,15 +25,16 @@ conn=$(nmcli -g GENERAL.CONNECTION device show "$dev" 2>/dev/null)
 active=""
 [ -n "$conn" ] && active=$(nmcli -g 802-11-wireless.ssid connection show "$conn" 2>/dev/null)
 
-# Campos SIGNAL:SECURITY:SSID. nmcli escapa los ':' del nombre como '\:'.
+# Campos SIGNAL:SECURITY:SSID. nmcli escapa los ':' y las '\' del nombre como '\:' y '\\'.
+# Se cambian por marcadores antes de partir por ':' y se restauran después.
 # Cada línea: texto del menú <TAB> SSID
 nmcli -t -f SIGNAL,SECURITY,SSID device wifi list --rescan auto \
-    | sed 's/\\:/\x01/g' \
-    | awk -F: -v active="$active" '{ gsub("\001", ":", $3) } $3 != "" && !seen[$3]++ {
+    | sed 's/\\\\/\x02/g; s/\\:/\x01/g' \
+    | active="$active" awk -F: '{ gsub("\001", ":", $3); gsub("\002", "\\", $3) } $3 != "" && !seen[$3]++ {
         s = $1 + 0
         icon = s >= 80 ? "󰤨" : s >= 60 ? "󰤥" : s >= 40 ? "󰤢" : s >= 20 ? "󰤟" : "󰤯"
         lock = ($2 == "" || $2 == "--") ? "" : "  󰌾"
-        mark = ($3 == active) ? "  (conectada)" : ""
+        mark = ($3 == ENVIRON["active"]) ? "  (conectada)" : ""
         printf "%s  %s%s%s\t%s\n", icon, $3, lock, mark, $3
     }' > "$tmp/list"
 
@@ -48,7 +49,8 @@ if [ "$choice" = "󰖪  Apagar Wi-Fi" ]; then
     exit 0
 fi
 
-line=$(awk -F'\t' -v c="$choice" '$1 == c { print; exit }' "$tmp/list")
+# La elección va por el entorno: awk -v interpretaría las '\' del nombre
+line=$(c="$choice" awk -F'\t' '$1 == ENVIRON["c"] { print; exit }' "$tmp/list")
 [ -z "$line" ] && exit 0
 ssid=$(printf '%s' "$line" | cut -f2)
 
