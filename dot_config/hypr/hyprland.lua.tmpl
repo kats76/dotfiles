@@ -307,6 +307,11 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
+-- Capturas de un área: Impr Pant al portapapeles; Super + Impr Pant también la guarda en ~/Img/Screenshots
+local screenshot = "~/.config/hypr/scripts/screenshot.sh"
+hl.bind("Print",               hl.dsp.exec_cmd(screenshot .. " clip"))
+hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(screenshot .. " save"))
+
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----

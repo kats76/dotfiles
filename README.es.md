@@ -36,7 +36,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 Haz antes un `sudo pacman -Syu` completo: instalar un paquete de Qt con el sistema a medio actualizar rompe SDDM.
 
 ```bash
-sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl \
+sudo pacman -S chezmoi hyprland hyprpaper waybar mako hyprlock hypridle swayimg kitty wofi cava brightnessctl playerctl grim slurp wl-clipboard \
   ttf-jetbrains-mono-nerd noto-fonts-emoji adobe-source-han-sans-jp-fonts qt6ct thunar starship \
   zsh-autosuggestions sddm qt6-virtualkeyboard blueman power-profiles-daemon python-gobject gtk-layer-shell
 yay -S wlogout sddm-silent-theme
@@ -120,8 +120,10 @@ chezmoi apply
 | `Super + Shift + 1…0` | Mandar la ventana al escritorio |
 | `Super + S` / `Super + Shift + S` | Scratchpad: mostrar / mandar ventana |
 | `Super + M` | Salir de Hyprland |
+| `Impr Pant` | Captura de un área al portapapeles |
+| `Super + Impr Pant` | Captura de un área, guardada en `~/Img/Screenshots` y copiada |
 
-Las teclas de medios, volumen y brillo también funcionan, incluso con la sesión bloqueada.
+Las teclas de medios, volumen y brillo también funcionan, incluso con la sesión bloqueada. Las capturas usan `hypr/scripts/screenshot.sh` (grim y slurp); `Esc` cancela la selección.
 
 ## Waybar
 
