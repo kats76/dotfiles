@@ -162,7 +162,7 @@ Vuelve a ejecutarlo tras actualizar `sddm-silent-theme` o cambiar el wallpaper. 
 
 `Super + Backspace`. `wlogout/layout` define las seis acciones y su letra (`l` bloquear, `e` cerrar sesión, `u` suspender, `h` hibernar, `s` apagar, `r` reiniciar). Cerrar sesión usa `hyprshutdown` si está instalado y, si no, sale de Hyprland directamente.
 
-`wlogout/style.css` es el estilo por defecto de wlogout con un cambio: solo se resalta el botón que tiene el ratón encima (por defecto también se resaltaba el foco de teclado, así que Lock parecía siempre seleccionado). Los colores se cambian ahí.
+`wlogout/style.css` usa la paleta: fondo `bg` translúcido, tarjetas redondeadas con un borde fino `gray` como los módulos de waybar, JetBrainsMono, y el botón con el ratón encima se pone `accent`. Solo el ratón resalta un botón: por defecto también lo hacía el foco de teclado, así que Lock parecía siempre seleccionado.
 
 ## Bloqueo e inactividad
 
