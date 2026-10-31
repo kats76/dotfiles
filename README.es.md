@@ -12,7 +12,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 
 - [Instalación](#instalación-arch-linux)
 - [Paleta y fuentes](#paleta-y-fuentes)
-- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Bloqueo](#bloqueo-e-inactividad) · [Lanzador](#lanzador-de-apps-wofi) · [Visor](#visor-de-imágenes-swayimg) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [Gestor de archivos y GTK](#gestor-de-archivos-y-gtk) · [Firefox y Vimium](#firefox-y-vimium)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Pantalla de login](#pantalla-de-login-sddm) · [Menú de salida](#menú-de-salida-wlogout) · [Bloqueo](#bloqueo-e-inactividad) · [Lanzador](#lanzador-de-apps-wofi) · [Visor](#visor-de-imágenes-swayimg) · [Terminal y shell](#terminal-y-shell) · [Neovim](#neovim) · [VS Code](#vs-code) · [Gestor de archivos y GTK](#gestor-de-archivos-y-gtk) · [Firefox y Vimium](#firefox-y-vimium)
 - [Flujo de trabajo](#flujo-de-trabajo) · [Nunca va al repo](#nunca-va-al-repo-) · [Otras máquinas](#otras-máquinas)
 
 ## Qué hay aquí
@@ -28,6 +28,7 @@ Este README también es una guía: cada componente tiene su captura, qué está 
 | `dot_config/fontconfig`, `gtk-3.0`, `gtk-4.0`, `qt6ct` | `~/.config/…` | Para que las apps GTK y Qt sigan el mismo estilo |
 | `dot_local/share/color-schemes/` | `~/.local/share/color-schemes/` | Esquema de color de Qt con la paleta |
 | `.chezmoidata/palette.toml` | (no se aplica) | La paleta: todas las configuraciones leen sus colores de aquí |
+| `dot_local/share/hypr-palette-vscode/` | `~/.local/share/hypr-palette-vscode/` | Tema de VS Code, que un script de chezmoi empaqueta e instala |
 | `dot_zshrc`, `dot_bashrc` | `~/.zshrc`, `~/.bashrc` | Shell |
 
 > Nomenclatura de chezmoi: `dot_` = `.`, `private_` = sin permisos para otros, `executable_` = ejecutable, `.tmpl` = plantilla.
@@ -238,6 +239,15 @@ xdg-mime default swayimg.desktop $(grep '^MimeType=' /usr/share/applications/swa
 - `lua/config/options.lua`: números de línea relativos, sangría de 2 espacios y 10 líneas de margen al hacer scroll. La tecla líder es `Espacio`.
 
 Para añadir un plugin, crea un fichero en `lua/plugins/` que devuelva su especificación.
+
+## VS Code
+
+`hypr-palette-vscode/` es un tema de VS Code con dos partes:
+
+- **Interfaz**: la paleta, con la misma lógica que el resto del escritorio. `accent` marca lo activo (pestaña, elemento seleccionado, botones), `accent2` lo que está bajo el cursor y el foco, y `gray` lo inactivo. Los fondos son `bg` en el editor y `bg_alt` en las barras.
+- **Código**: Catppuccin Mocha, el mismo resaltado que en Neovim.
+
+El script `.chezmoiscripts/run_onchange_after_install-vscode-theme.sh.tmpl` lo empaqueta en un `.vsix` y lo instala con `code --install-extension`. Se vuelve a ejecutar en `chezmoi apply` cada vez que cambia la paleta o el tema, y no hace nada si VS Code no está instalado (si lo instalas más tarde, el siguiente `chezmoi apply` lo detecta e instala el tema). Para activarlo: `Ctrl+K Ctrl+T` → *Hypr Palette*.
 
 ## Gestor de archivos y GTK
 
