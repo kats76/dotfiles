@@ -257,7 +257,14 @@ Add a plugin by creating a file in `lua/plugins/` that returns its spec.
 
 ## Firefox and Vimium
 
-The Firefox theme and the Vimium styles with this palette live in their own repo: [kats76/hypr-palette](https://github.com/kats76/hypr-palette). Private windows keep Firefox's own purple design.
+![Firefox with the Hypr Palette theme](https://raw.githubusercontent.com/kats76/hypr-palette/main/docs/img/firefox.webp)
+
+The browser follows the same palette, through a theme and a stylesheet that live in their own repo.
+
+- **Firefox theme:** the window, tabs and menus in `bg`, the selected tab in `accent` (like the active workspace in waybar) and `accent2` on hover. Private windows keep Firefox's own purple design. Install it from [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/hypr-palette/).
+- **Vimium:** the link hints, the search bar (Vomnibar) and the bottom messages in the palette and JetBrainsMono. Paste the stylesheet in Vimium options → *CSS for Vimium UI*.
+
+For screenshots, the full list of colors and how to release a new version, see **[kats76/hypr-palette](https://github.com/kats76/hypr-palette)**.
 
 ## Workflow
 
