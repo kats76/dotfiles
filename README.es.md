@@ -242,6 +242,8 @@ Para añadir un plugin, crea un fichero en `lua/plugins/` que devuelva su especi
 
 ## VS Code
 
+![VS Code con el tema Hypr Palette](docs/img/vscode.webp)
+
 `hypr-palette-vscode/` es un tema de VS Code con dos partes:
 
 - **Interfaz**: la paleta, con la misma lógica que el resto del escritorio. `accent` marca lo activo (pestaña, elemento seleccionado, botones), `accent2` lo que está bajo el cursor y el foco, y `gray` lo inactivo. Los fondos son `bg` en el editor y `bg_alt` en las barras.
