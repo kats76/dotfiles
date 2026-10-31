@@ -7,16 +7,16 @@
 }
 
 window {
-	background-color: alpha(#1e1e2e, 0.85);
+	background-color: alpha(#{{ .palette.bg }}, 0.85);
 }
 
 button {
 	margin: 12px;
 	border-radius: 10px;
-	border: 1px solid alpha(#a08f95, 0.35);
-	text-decoration-color: #cdd6f4;
-	color: #cdd6f4;
-	background-color: alpha(#1e1e2e, 0.95);
+	border: 1px solid alpha(#{{ .palette.gray }}, 0.35);
+	text-decoration-color: #{{ .palette.fg }};
+	color: #{{ .palette.fg }};
+	background-color: alpha(#{{ .palette.bg }}, 0.95);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 25%;
@@ -24,9 +24,9 @@ button {
 
 /* Solo el botón con el ratón encima: el foco de teclado no se resalta (Lock lo tiene al abrir) */
 button:hover, button:active {
-	background-color: #8a63c7;
-	border-color: #8a63c7;
-	color: #c7ced6;
+	background-color: #{{ .palette.accent }};
+	border-color: #{{ .palette.accent }};
+	color: #{{ .palette.light }};
 	outline-style: none;
 }
 

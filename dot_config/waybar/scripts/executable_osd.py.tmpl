@@ -99,22 +99,22 @@ def show(kind, fd):
     gi.require_version("GtkLayerShell", "0.1")
     from gi.repository import Gdk, GLib, Gtk, GtkLayerShell
 
-    # Paleta: bg #1e1e2e, fg #cdd6f4, accent #8a63c7, red #c44532
+    # Paleta: bg #{{ .palette.bg }}, fg #{{ .palette.fg }}, accent #{{ .palette.accent }}, red #{{ .palette.red }}
     css = b"""
     .osd { background-color: transparent; }
     #osd {
-        background-color: rgba(30, 30, 46, 0.94);
-        border: 1px solid #8a63c7;
+        background-color: alpha(#{{ .palette.bg }}, 0.94);
+        border: 1px solid #{{ .palette.accent }};
         border-radius: 18px;
         padding: 12px 16px;
     }
-    #osd * { font-family: "JetBrainsMono Nerd Font"; color: #cdd6f4; }
+    #osd * { font-family: "JetBrainsMono Nerd Font"; color: #{{ .palette.fg }}; }
     #osd .icon { font-size: 20px; }
-    #osd .icon.muted { color: #c44532; }
+    #osd .icon.muted { color: #{{ .palette.red }}; }
     #osd .value { font-size: 13px; min-width: 44px; }
-    #osd levelbar trough { background-color: #313244; border: none; border-radius: 6px; min-height: 8px; }
-    #osd levelbar block.filled { background-color: #8a63c7; border-radius: 6px; }
-    #osd levelbar.muted block.filled { background-color: #a08f95; }
+    #osd levelbar trough { background-color: #{{ .palette.bg_high }}; border: none; border-radius: 6px; min-height: 8px; }
+    #osd levelbar block.filled { background-color: #{{ .palette.accent }}; border-radius: 6px; }
+    #osd levelbar.muted block.filled { background-color: #{{ .palette.gray }}; }
     #osd levelbar block.empty { background-color: transparent; }
     """
     provider = Gtk.CssProvider()

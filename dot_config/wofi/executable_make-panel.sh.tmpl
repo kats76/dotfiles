@@ -15,9 +15,9 @@ CROP="${PANEL_CROP-900x2070+1575+150}"
 WIDTH=220
 HEIGHT=506
 
-# Degradado del borde derecho hacia el fondo de los menús (bg: #1e1e2e)
+# Degradado del borde derecho hacia el fondo de los menús (bg: #{{ .palette.bg }})
 FADE=70
-BG="30,30,46"
+BG="{{ template "rgb" .palette.bg }}"
 
 out="$(dirname "$0")/panel.png"
 [ -f "$SOURCE" ] || { echo "No existe la imagen de origen: $SOURCE" >&2; exit 1; }

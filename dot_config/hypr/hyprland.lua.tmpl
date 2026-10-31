@@ -49,15 +49,15 @@ local terminal    = "kitty"
 local fileManager = "thunar"
 
 -- Color palette
-local bg      = "rgba(1e1e2eff)"
-local fg      = "rgba(cdd6f4ff)"
-local accent  = "rgba(8a63c7ff)"
-local accent2 = "rgba(6f9f98ff)"
-local red     = "rgba(c44532ff)"
-local purple  = "rgba(8e6f86ff)"
-local neutral = "rgba(8c6e6eff)"
-local gray    = "rgba(a08f95ff)"
-local light   = "rgba(c7ced6ff)"
+local bg      = "rgba({{ .palette.bg }}ff)"
+local fg      = "rgba({{ .palette.fg }}ff)"
+local accent  = "rgba({{ .palette.accent }}ff)"
+local accent2 = "rgba({{ .palette.accent2 }}ff)"
+local red     = "rgba({{ .palette.red }}ff)"
+local purple  = "rgba({{ .palette.purple }}ff)"
+local neutral = "rgba({{ .palette.neutral }}ff)"
+local gray    = "rgba({{ .palette.gray }}ff)"
+local light   = "rgba({{ .palette.light }}ff)"
 
 
 -------------------
@@ -135,7 +135,7 @@ hl.config({
             enabled      = true,
             range        = 4,
             render_power = 3,
-            color        = "rgba(1e1e2eee)",
+            color        = "rgba({{ .palette.bg }}ee)",
         },
 
         blur = {

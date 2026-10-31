@@ -9,7 +9,7 @@ mode="${1:-clip}"
 dir="${SCREENSHOT_DIR:-$HOME/Img/Screenshots}"
 
 # Recuadro de selección con la paleta: fondo bg oscurecido, borde y relleno en accent
-geom=$(slurp -b 1e1e2e66 -c 8a63c7ff -s 8a63c722 -w 2) || exit 0
+geom=$(slurp -b {{ .palette.bg }}66 -c {{ .palette.accent }}ff -s {{ .palette.accent }}22 -w 2) || exit 0
 
 # Captura a un archivo y comprueba que salió bien antes de tocar el portapapeles
 capture() {

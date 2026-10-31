@@ -1,9 +1,9 @@
 # Notificaciones con la identidad de Hyprland: salen bajo el título de la ventana de waybar
 font=JetBrainsMono Nerd Font 10
-background-color=#1e1e2ef2
-text-color=#cdd6f4
-border-color=#8a63c7
-progress-color=over #8a63c7
+background-color=#{{ .palette.bg }}f2
+text-color=#{{ .palette.fg }}
+border-color=#{{ .palette.accent }}
+progress-color=over #{{ .palette.accent }}
 border-size=2
 border-radius=10
 padding=10,14
@@ -20,8 +20,8 @@ outer-margin=6,0,0,0
 margin=6
 
 [urgency=low]
-border-color=#a08f95
+border-color=#{{ .palette.gray }}
 
 [urgency=critical]
-border-color=#c44532
+border-color=#{{ .palette.red }}
 default-timeout=0

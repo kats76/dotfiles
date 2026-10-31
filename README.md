@@ -27,6 +27,7 @@ This README is also a guide: each component has a screenshot, what is configured
 | `dot_config/nvim/` | `~/.config/nvim/` | Neovim with lazy.nvim and Catppuccin |
 | `dot_config/fontconfig`, `gtk-3.0`, `gtk-4.0`, `qt6ct` | `~/.config/…` | Make GTK and Qt apps follow the same look |
 | `dot_local/share/color-schemes/` | `~/.local/share/color-schemes/` | Qt color scheme with the palette |
+| `.chezmoidata/palette.toml` | (not applied) | The palette: every config reads its colors from here |
 | `dot_zshrc`, `dot_bashrc` | `~/.zshrc`, `~/.bashrc` | Shell |
 
 > chezmoi naming: `dot_` = `.`, `private_` = no permissions for others, `executable_` = executable bit, `.tmpl` = template.
@@ -59,6 +60,8 @@ The wallpaper is not in this repo. Download it from [wallhaven 9oo8k1](https://w
 | --- | --- | --- |
 | bg | `#1e1e2e` | Backgrounds |
 | fg | `#cdd6f4` | Text |
+| bg_alt | `#252536` | One shade above `bg`: sidebars, text fields |
+| bg_high | `#313244` | Two shades above `bg`: level bars, image viewer checkerboard |
 | accent | `#8a63c7` | Active border, selection, focused buttons |
 | accent2 | `#6f9f98` | Second accent, hover, links |
 | red | `#c44532` | Urgent, errors |
@@ -67,16 +70,16 @@ The wallpaper is not in this repo. Download it from [wallhaven 9oo8k1](https://w
 | gray | `#a08f95` | Inactive elements, module borders |
 | light | `#c7ced6` | Secondary text |
 
-**Change the palette.** There is no central file: each program has its own copy of the colors. They live in `hypr/hyprland.lua` (the `local bg = …` lines), `waybar/style.css` (`@define-color`), `kitty/kitty.conf`, `wofi/style.css` and `sddm-silent/hypr.conf`. The Qt scheme `HyprPalette.colors` uses the same colors in RGB. To swap one color everywhere:
+**Change the palette.** The colors are defined once, in `.chezmoidata/palette.toml`. Every config that uses them is a chezmoi template (`.tmpl`) that reads `{{ .palette.accent }}` and writes it in the format that program expects: `#rrggbb`, `rgba(rrggbbaa)` for Hyprland, `0xaarrggbb` for swayimg or `r,g,b` for Qt. To change a color everywhere:
 
 ```bash
-chezmoi cd
-grep -rl --exclude-dir=.git 8a63c7 .                            # where the accent is used
-grep -rl --exclude-dir=.git 8a63c7 . | xargs sed -i 's/8a63c7/ff79c6/g'   # replace it
+chezmoi cd && $EDITOR .chezmoidata/palette.toml   # e.g. accent = "ff79c6"
+chezmoi diff                                       # see what would change
 chezmoi apply
+hyprctl reload && pkill -SIGUSR2 waybar && makoctl reload
 ```
 
-`wofi/style.css` also writes the background as `rgba(30, 30, 46, 0.96)`, so change that one by hand.
+Apps that are already open (kitty, Thunar, Qt apps) use the new colors after a restart. The login screen is installed outside `$HOME`, so after `chezmoi apply` run `~/.config/sddm-silent/install.sh` again. Firefox and Vimium are not generated from this file: they live in [kats76/hypr-palette](https://github.com/kats76/hypr-palette).
 
 **Fonts:** **JetBrainsMono Nerd Font** everywhere, with Noto Color Emoji and Source Han Sans JP (Japanese) as fallbacks, set in `fontconfig/fonts.conf`. Without a Japanese font, Japanese text shows as empty squares in the terminal, the browser and the window title in waybar. Apps that were already open when you install a font need a restart to use it.
 

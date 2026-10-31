@@ -1,0 +1,71 @@
+[General]
+ColorScheme=HyprPalette
+
+[ColorEffects:Disabled]
+Color=112,112,122
+ColorAmount=0
+ColorEffect=0
+ContrastAmount=0.65
+IntensityAmount=0.1
+ContrastEffect=2
+
+[ColorEffects:Inactive]
+ChangeSelectionColor=true
+Color={{ template "rgb" .palette.neutral }}
+ColorAmount=0.5
+ColorEffect=2
+ContrastAmount=0.25
+IntensityAmount=0
+ContrastEffect=2
+
+[Colors:Button]
+BackgroundNormal={{ template "rgb" .palette.bg }}
+BackgroundAlternate={{ template "rgb" .palette.bg_high }}
+ForegroundNormal={{ template "rgb" .palette.fg }}
+ForegroundInactive=140,143,149
+ForegroundPositive={{ template "rgb" .palette.accent2 }}
+ForegroundNeutral={{ template "rgb" .palette.neutral }}
+ForegroundNegative={{ template "rgb" .palette.red }}
+DecorationFocus={{ template "rgb" .palette.accent }}
+DecorationHover={{ template "rgb" .palette.accent2 }}
+
+[Colors:Selection]
+BackgroundNormal={{ template "rgb" .palette.accent }}
+ForegroundNormal={{ template "rgb" .palette.light }}
+
+[Colors:Tooltip]
+BackgroundNormal={{ template "rgb" .palette.bg }}
+ForegroundNormal={{ template "rgb" .palette.fg }}
+DecorationFocus={{ template "rgb" .palette.accent }}
+
+[Colors:View]
+BackgroundNormal={{ template "rgb" .palette.bg }}
+BackgroundAlternate={{ template "rgb" .palette.bg_high }}
+ForegroundNormal={{ template "rgb" .palette.fg }}
+ForegroundInactive=140,143,149
+ForegroundPositive={{ template "rgb" .palette.accent2 }}
+ForegroundNeutral={{ template "rgb" .palette.neutral }}
+ForegroundNegative={{ template "rgb" .palette.red }}
+DecorationFocus={{ template "rgb" .palette.accent }}
+DecorationHover={{ template "rgb" .palette.accent2 }}
+
+[Colors:Window]
+BackgroundNormal={{ template "rgb" .palette.bg }}
+BackgroundAlternate={{ template "rgb" .palette.bg_high }}
+ForegroundNormal={{ template "rgb" .palette.fg }}
+ForegroundInactive=140,143,149
+ForegroundPositive={{ template "rgb" .palette.accent2 }}
+ForegroundNeutral={{ template "rgb" .palette.neutral }}
+ForegroundNegative={{ template "rgb" .palette.red }}
+DecorationFocus={{ template "rgb" .palette.accent }}
+DecorationHover={{ template "rgb" .palette.accent2 }}
+
+[General]
+Name=HyprPalette
+shadeSortColumn=true
+
+[WM]
+activeBackground={{ template "rgb" .palette.accent }}
+activeForeground={{ template "rgb" .palette.light }}
+inactiveBackground={{ template "rgb" .palette.bg }}
+inactiveForeground={{ template "rgb" .palette.gray }}
