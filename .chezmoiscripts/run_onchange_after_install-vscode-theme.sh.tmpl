@@ -1,0 +1,53 @@
+#!/bin/sh
+# Empaqueta el tema de VS Code (~/.local/share/hypr-palette-vscode) en un .vsix y lo instala.
+# chezmoi lo vuelve a ejecutar cuando cambia alguno de estos hashes, es decir, la paleta o el tema,
+# o cuando aparece VS Code (si se instala después del primer apply, la ruta deja de estar vacía).
+# code: {{ lookPath "code" }}
+# paleta: {{ .palette | toJson | sha256sum }}
+# tema: {{ include "dot_local/private_share/hypr-palette-vscode/themes/hypr-palette-color-theme.json.tmpl" | sha256sum }}
+# package.json: {{ include "dot_local/private_share/hypr-palette-vscode/package.json" | sha256sum }}
+set -eu
+
+if ! command -v code >/dev/null 2>&1; then
+  echo "VS Code no está instalado: se omite el tema"
+  exit 0
+fi
+
+src="$HOME/.local/share/hypr-palette-vscode"
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+# Un .vsix es un zip con el manifiesto y la extensión dentro de extension/
+python3 - "$src" "$tmp/hypr-palette.vsix" <<'EOF'
+import json, pathlib, sys, zipfile
+
+src, out = pathlib.Path(sys.argv[1]), sys.argv[2]
+pkg = json.loads((src / "package.json").read_text())
+manifest = f"""<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
+  <Metadata>
+    <Identity Language="en-US" Id="{pkg['name']}" Version="{pkg['version']}" Publisher="{pkg['publisher']}"/>
+    <DisplayName>{pkg['displayName']}</DisplayName>
+    <Description xml:space="preserve">{pkg['description']}</Description>
+    <Categories>Themes</Categories>
+  </Metadata>
+  <Installation><InstallationTarget Id="Microsoft.VisualStudio.Code"/></Installation>
+  <Dependencies/>
+  <Assets><Asset Type="Microsoft.VisualStudio.Code.Manifest" Path="extension/package.json" Addressable="true"/></Assets>
+</PackageManifest>
+"""
+content_types = """<?xml version="1.0" encoding="utf-8"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension=".json" ContentType="application/json"/>
+  <Default Extension=".vsixmanifest" ContentType="text/xml"/>
+</Types>
+"""
+with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
+    z.writestr("[Content_Types].xml", content_types)
+    z.writestr("extension.vsixmanifest", manifest)
+    for path in sorted(src.rglob("*")):
+        if path.is_file():
+            z.write(path, f"extension/{path.relative_to(src).as_posix()}")
+EOF
+
+code --install-extension "$tmp/hypr-palette.vsix" --force

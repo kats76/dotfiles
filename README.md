@@ -12,7 +12,7 @@ This README is also a guide: each component has a screenshot, what is configured
 
 - [Install](#install-arch-linux)
 - [Palette and fonts](#palette-and-fonts)
-- [Hyprland](#hyprland) · [Waybar](#waybar) · [Login screen](#login-screen-sddm) · [Logout menu](#logout-menu-wlogout) · [Lock screen](#lock-screen-and-idle) · [App launcher](#app-launcher-wofi) · [Image viewer](#image-viewer-swayimg) · [Terminal and shell](#terminal-and-shell) · [Neovim](#neovim) · [File manager and GTK](#file-manager-and-gtk) · [Firefox and Vimium](#firefox-and-vimium)
+- [Hyprland](#hyprland) · [Waybar](#waybar) · [Login screen](#login-screen-sddm) · [Logout menu](#logout-menu-wlogout) · [Lock screen](#lock-screen-and-idle) · [App launcher](#app-launcher-wofi) · [Image viewer](#image-viewer-swayimg) · [Terminal and shell](#terminal-and-shell) · [Neovim](#neovim) · [VS Code](#vs-code) · [File manager and GTK](#file-manager-and-gtk) · [Firefox and Vimium](#firefox-and-vimium)
 - [Workflow](#workflow) · [Never in the repo](#never-in-the-repo-) · [Other machines](#other-machines)
 
 ## What's inside
@@ -28,6 +28,7 @@ This README is also a guide: each component has a screenshot, what is configured
 | `dot_config/fontconfig`, `gtk-3.0`, `gtk-4.0`, `qt6ct` | `~/.config/…` | Make GTK and Qt apps follow the same look |
 | `dot_local/share/color-schemes/` | `~/.local/share/color-schemes/` | Qt color scheme with the palette |
 | `.chezmoidata/palette.toml` | (not applied) | The palette: every config reads its colors from here |
+| `dot_local/share/hypr-palette-vscode/` | `~/.local/share/hypr-palette-vscode/` | VS Code theme, packaged and installed by a chezmoi script |
 | `dot_zshrc`, `dot_bashrc` | `~/.zshrc`, `~/.bashrc` | Shell |
 
 > chezmoi naming: `dot_` = `.`, `private_` = no permissions for others, `executable_` = executable bit, `.tmpl` = template.
@@ -238,6 +239,15 @@ xdg-mime default swayimg.desktop $(grep '^MimeType=' /usr/share/applications/swa
 - `lua/config/options.lua`: relative line numbers, 2-space indent, 10 lines of scroll margin. The leader key is `Space`.
 
 Add a plugin by creating a file in `lua/plugins/` that returns its spec.
+
+## VS Code
+
+`hypr-palette-vscode/` is a VS Code theme in two parts:
+
+- **UI**: the palette, following the same rules as the rest of the desktop. `accent` marks what is active (tab, selected item, buttons), `accent2` what is under the cursor and focused, and `gray` what is inactive. Backgrounds are `bg` in the editor and `bg_alt` in the bars.
+- **Code**: Catppuccin Mocha, the same highlighting as Neovim.
+
+`.chezmoiscripts/run_onchange_after_install-vscode-theme.sh.tmpl` packages it into a `.vsix` and installs it with `code --install-extension`. It runs again on `chezmoi apply` whenever the palette or the theme changes, and does nothing if VS Code is not installed (if you install it later, the next `chezmoi apply` notices and installs the theme). To enable it: `Ctrl+K Ctrl+T` → *Hypr Palette*.
 
 ## File manager and GTK
 

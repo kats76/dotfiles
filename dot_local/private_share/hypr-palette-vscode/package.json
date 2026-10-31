@@ -1,0 +1,21 @@
+{
+  "name": "hypr-palette",
+  "displayName": "Hypr Palette",
+  "description": "La paleta del escritorio en la interfaz y Catppuccin Mocha en el código",
+  "version": "1.0.0",
+  "publisher": "kats76",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Hypr Palette",
+        "uiTheme": "vs-dark",
+        "path": "./themes/hypr-palette-color-theme.json"
+      }
+    ]
+  }
+}
