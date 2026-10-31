@@ -17,7 +17,13 @@ menu_lock() {
     export WOFI_MENU_LOCKED=1
 }
 
-# El panel existe o se puede generar (make-panel.sh necesita la imagen de origen)
+# El panel existe o se puede generar (make-panel.sh necesita la imagen de origen).
+# Se regenera si make-panel.sh es más nuevo que panel.png: chezmoi lo reescribe al
+# cambiar el fondo de la paleta o el recorte, y la imagen lleva ese fondo en el degradado.
 panel_ready() {
-    [ -f "$WOFI_DIR/panel.png" ] || "$WOFI_DIR/make-panel.sh" > /dev/null 2>&1
+    if [ ! -f "$WOFI_DIR/panel.png" ] ||
+        [ -n "$(find "$WOFI_DIR/make-panel.sh" -newer "$WOFI_DIR/panel.png")" ]; then
+        "$WOFI_DIR/make-panel.sh" > /dev/null 2>&1
+    fi
+    [ -f "$WOFI_DIR/panel.png" ]
 }
