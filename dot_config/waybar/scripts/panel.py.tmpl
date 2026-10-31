@@ -29,40 +29,40 @@ MARGIN = 8  # distancia mínima al borde del monitor
 CLOSE_DELAY_MS = 600  # margen tras sacar el ratón antes de cerrar
 IDLE_CLOSE_MS = 5000  # si nunca se pasa el ratón por encima, se cierra solo
 
-# Paleta: bg #1e1e2e, fg #cdd6f4, accent #8a63c7, accent2 #6f9f98, red #c44532, gray #a08f95, light #c7ced6
+# Paleta: bg #{{ .palette.bg }}, fg #{{ .palette.fg }}, accent #{{ .palette.accent }}, accent2 #{{ .palette.accent2 }}, red #{{ .palette.red }}, gray #{{ .palette.gray }}, light #{{ .palette.light }}
 CSS = b"""
 .waybar-panel { background-color: transparent; }
 #panel {
-    background-color: rgba(30, 30, 46, 0.96);
-    border: 1px solid #8a63c7;
+    background-color: alpha(#{{ .palette.bg }}, 0.96);
+    border: 1px solid #{{ .palette.accent }};
     border-radius: 18px;
     padding: 14px;
 }
-#panel * { font-family: "JetBrainsMono Nerd Font"; font-size: 13px; color: #cdd6f4; }
+#panel * { font-family: "JetBrainsMono Nerd Font"; font-size: 13px; color: #{{ .palette.fg }}; }
 #panel .title { font-weight: bold; }
-#panel .value { color: #6f9f98; }
-#panel .section { color: #a08f95; font-size: 11px; margin-top: 6px; }
-#panel .hint { color: #a08f95; }
+#panel .value { color: #{{ .palette.accent2 }}; }
+#panel .section { color: #{{ .palette.gray }}; font-size: 11px; margin-top: 6px; }
+#panel .hint { color: #{{ .palette.gray }}; }
 #panel scrolledwindow, #panel viewport { background: transparent; border: none; }
-#panel scale trough { background-color: #313244; border: none; border-radius: 6px; min-height: 6px; }
-#panel scale highlight { background-color: #8a63c7; border-radius: 6px; }
+#panel scale trough { background-color: #{{ .palette.bg_high }}; border: none; border-radius: 6px; min-height: 6px; }
+#panel scale highlight { background-color: #{{ .palette.accent }}; border-radius: 6px; }
 #panel scale slider {
-    background-color: #cdd6f4; border: none; box-shadow: none;
+    background-color: #{{ .palette.fg }}; border: none; box-shadow: none;
     min-width: 16px; min-height: 16px; border-radius: 8px;
 }
-#panel switch { background-color: #313244; border: none; border-radius: 12px; }
-#panel switch:checked { background-color: #8a63c7; }
-#panel switch slider { background-color: #cdd6f4; border: none; box-shadow: none; border-radius: 10px; }
+#panel switch { background-color: #{{ .palette.bg_high }}; border: none; border-radius: 12px; }
+#panel switch:checked { background-color: #{{ .palette.accent }}; }
+#panel switch slider { background-color: #{{ .palette.fg }}; border: none; box-shadow: none; border-radius: 10px; }
 #panel button { background: transparent; border: none; box-shadow: none; border-radius: 10px; padding: 8px 10px; }
-#panel button:hover { background-color: alpha(#6f9f98, 0.35); }
-#panel button.active { background-color: #8a63c7; }
-#panel button.active label { color: #c7ced6; }
-#panel button.muted label, #panel .error { color: #c44532; }
+#panel button:hover { background-color: alpha(#{{ .palette.accent2 }}, 0.35); }
+#panel button.active { background-color: #{{ .palette.accent }}; }
+#panel button.active label { color: #{{ .palette.light }}; }
+#panel button.muted label, #panel .error { color: #{{ .palette.red }}; }
 #panel entry {
-    background-color: #252536; color: #cdd6f4; caret-color: #cdd6f4;
-    border: 1px solid alpha(#a08f95, 0.35); border-radius: 10px; padding: 6px 10px;
+    background-color: #{{ .palette.bg_alt }}; color: #{{ .palette.fg }}; caret-color: #{{ .palette.fg }};
+    border: 1px solid alpha(#{{ .palette.gray }}, 0.35); border-radius: 10px; padding: 6px 10px;
 }
-#panel entry:focus { border-color: #6f9f98; }
+#panel entry:focus { border-color: #{{ .palette.accent2 }}; }
 """
 
 LOCK = os.path.join(os.environ.get("XDG_RUNTIME_DIR", "/tmp"), "waybar-panel.lock")

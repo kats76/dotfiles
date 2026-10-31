@@ -19,9 +19,9 @@ PROFILES = (("performance", "󰓅", "Rendimiento"), ("balanced", "󰾅", "Equili
 
 # Barra de carga: accent2 normal, red con poca batería (se añade al CSS común de panel.py)
 CSS = b"""
-#panel levelbar trough { background-color: #313244; border: none; border-radius: 6px; min-height: 8px; }
-#panel levelbar block.filled { background-color: #6f9f98; border-radius: 6px; }
-#panel levelbar.low block.filled { background-color: #c44532; }
+#panel levelbar trough { background-color: #{{ .palette.bg_high }}; border: none; border-radius: 6px; min-height: 8px; }
+#panel levelbar block.filled { background-color: #{{ .palette.accent2 }}; border-radius: 6px; }
+#panel levelbar.low block.filled { background-color: #{{ .palette.red }}; }
 #panel levelbar block.empty { background-color: transparent; }
 """
 

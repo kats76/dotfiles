@@ -3,15 +3,15 @@
     font-size: 12px;
 }
 
-@define-color bg #1e1e2e;
-@define-color fg #cdd6f4;
-@define-color accent #8a63c7;
-@define-color accent2 #6f9f98;
-@define-color red #c44532;
-@define-color purple #8e6f86;
-@define-color neutral #8c6e6e;
-@define-color gray #a08f95;
-@define-color light #c7ced6;
+@define-color bg #{{ .palette.bg }};
+@define-color fg #{{ .palette.fg }};
+@define-color accent #{{ .palette.accent }};
+@define-color accent2 #{{ .palette.accent2 }};
+@define-color red #{{ .palette.red }};
+@define-color purple #{{ .palette.purple }};
+@define-color neutral #{{ .palette.neutral }};
+@define-color gray #{{ .palette.gray }};
+@define-color light #{{ .palette.light }};
 
 window#waybar {
     background-color: alpha(@bg, 0.82);

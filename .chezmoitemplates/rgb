@@ -1,0 +1,3 @@
+{{- /* Hex "rrggbb" en decimal "r,g,b", para los archivos que no admiten hex (Qt, ImageMagick) */ -}}
+{{- $b := hexDecode . -}}
+{{- printf "%d,%d,%d" (index $b 0) (index $b 1) (index $b 2) -}}

@@ -12,34 +12,34 @@ window {
 #outer-box {
     margin: 0px;
     padding: 14px;
-    border: 1px solid #8a63c7;
+    border: 1px solid #{{ .palette.accent }};
     border-radius: 18px;
-    background-color: rgba(30, 30, 46, 0.96);
+    background-color: alpha(#{{ .palette.bg }}, 0.96);
 }
 
 #input {
     margin: 0 0 12px 0;
     padding: 10px 14px;
-    border: 1px solid #8c6e6e;
+    border: 1px solid #{{ .palette.neutral }};
     border-radius: 12px;
-    background-color: #1e1e2e;
-    color: #cdd6f4;
+    background-color: #{{ .palette.bg }};
+    color: #{{ .palette.fg }};
 }
 
 #input:focus {
-    border-color: #6f9f98;
+    border-color: #{{ .palette.accent2 }};
 }
 
 #entry {
     padding: 10px 12px;
     border-radius: 12px;
     background-color: transparent;
-    color: #cdd6f4;
+    color: #{{ .palette.fg }};
 }
 
 #entry:selected {
-    background-color: #8a63c7;
-    color: #c7ced6;
+    background-color: #{{ .palette.accent }};
+    color: #{{ .palette.light }};
 }
 
 #text,

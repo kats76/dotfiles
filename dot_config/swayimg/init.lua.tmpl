@@ -1,0 +1,23 @@
+-- Visor de imágenes con la paleta de Hyprland (colores en formato 0xAARRGGBB)
+-- Solo se cambia el aspecto: atajos y comportamiento son los de serie
+
+-- Texto (nombre, tamaño, zoom...)
+swayimg.text.font = "JetBrainsMono Nerd Font"
+swayimg.text.size = 18
+swayimg.text.color = 0xff{{ .palette.fg }}      -- fg
+swayimg.text.background = 0xcc{{ .palette.bg }} -- bg al 80 %
+swayimg.text.shadow = 0x00000000
+
+-- Visor y presentación
+swayimg.viewer.set_window_background(0xff{{ .palette.bg }})
+swayimg.viewer.set_image_chessboard(20, 0xff{{ .palette.bg_alt }}, 0xff{{ .palette.bg_high }})
+swayimg.viewer.mark_color = 0xff{{ .palette.accent }}
+swayimg.slideshow.set_window_background(0xff{{ .palette.bg }})
+
+-- Galería de miniaturas
+swayimg.gallery.window_color = 0xff{{ .palette.bg }}
+swayimg.gallery.unselected_color = 0xff{{ .palette.bg_alt }}
+swayimg.gallery.selected_color = 0xff{{ .palette.bg_high }}
+swayimg.gallery.border_color = 0xff{{ .palette.accent }} -- accent
+swayimg.gallery.border_size = 3
+swayimg.gallery.mark_color = 0xff{{ .palette.accent2 }}

@@ -1,0 +1,17 @@
+# Paleta del escritorio: la única fuente de los colores.
+# Las configuraciones son plantillas que leen estos valores con {{ .palette.<nombre> }}:
+# cambia un color aquí, ejecuta `chezmoi apply` y se actualiza en todas partes.
+# Hex sin "#": cada archivo lo escribe en su formato (#rrggbb, rgba(rrggbbaa), 0xaarrggbb o r,g,b).
+
+[palette]
+bg      = "1e1e2e"  # fondo de todo
+bg_alt  = "252536"  # un tono por encima: barras laterales, campos de texto
+bg_high = "313244"  # dos tonos por encima: barras de nivel, cuadros del visor
+fg      = "cdd6f4"  # texto
+accent  = "8a63c7"  # lo activo: workspace, pestaña, selección
+accent2 = "6f9f98"  # lo que está bajo el cursor, el foco, la carga
+red     = "c44532"  # silencio, errores, batería baja
+purple  = "8e6f86"
+neutral = "8c6e6e"  # bordes de ventanas inactivas, bloqueo de mayúsculas
+gray    = "a08f95"  # lo inactivo, bordes suaves
+light   = "c7ced6"  # texto sobre accent
